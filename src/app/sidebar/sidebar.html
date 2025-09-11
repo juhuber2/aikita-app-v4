@@ -1,0 +1,76 @@
+<!-- Button to open sidebar -->
+<button class="btn btn-primary m-3"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasSidebar">
+  <i class="bi bi-list"></i> Menu
+</button>
+
+<!-- Offcanvas Sidebar -->
+<div class="offcanvas offcanvas-start text-bg-dark"
+     tabindex="-1"
+     id="offcanvasSidebar">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">MyApp</h5>
+    <button type="button"
+            class="btn-close btn-close-white"
+            data-bs-dismiss="offcanvas"></button>
+  </div>
+
+  <div class="offcanvas-body d-flex flex-column p-0">
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li>
+        <a routerLink="/dashboard"
+           class="nav-link text-white px-3 d-flex align-items-center">
+          <i class="bi bi-house me-2"></i> Dashboard
+        </a>
+      </li>
+      <li>
+        <a routerLink="/reports"
+           class="nav-link text-white px-3 d-flex align-items-center">
+          <i class="bi bi-bar-chart me-2"></i> Reports
+        </a>
+      </li>
+      <li>
+        <div class="accordion" id="accordionSidebar">
+          <div class="accordion-item bg-dark border-0">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed bg-dark text-white"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#managementMenu">
+                <i class="bi bi-gear me-2"></i> Management
+              </button>
+            </h2>
+            <div id="managementMenu"
+                 class="accordion-collapse collapse">
+              <div class="accordion-body p-0">
+                <ul class="list-unstyled ms-3">
+                  <li>
+                    <a routerLink="/users"
+                       class="nav-link text-white px-3 py-1">Users</a>
+                  </li>
+                  <li>
+                    <a routerLink="/products"
+                       class="nav-link text-white px-3 py-1">Products</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li>
+        <a routerLink="/settings"
+           class="nav-link text-white px-3 d-flex align-items-center">
+          <i class="bi bi-sliders me-2"></i> Settings
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- Router Platzhalter für Seiten -->
+<main class="p-4">
+  <router-outlet></router-outlet>
+</main>
