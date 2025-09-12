@@ -1,1 +1,36 @@
-<p>planung works!</p>
+<div class="row">
+    <div class="col-6">
+        <div>
+            <p>
+                <button type="submit" (click)="getAllChildren()" class="btn btn-outline-success me-2">Kinder anzeigen</button>
+            </p>
+        </div>
+        <div class="card">
+            <div class="card-header fs-4 fw-bold">
+                Kinder
+            </div>
+            <div class="card-body" >
+                <table class="table table-striped table-borderless">
+                    <thead>
+                        <tr>
+                            <th>Nummer</th>
+                            <th>Geschlecht</th>
+                            <th>Alter</th>
+                            <th>Beobachtung</th>
+                        </tr>
+                    </thead>
+            <tbody>
+                @for (item of childrenList; track $index) {
+                    <tr>
+                        <td>{{ item.childID }}</td> 
+                        <td>{{ item.gender }}</td>
+                        <td>{{ item.age }}</td>
+                        <td>{{ item.observation }}</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+               
+            </div>
+        </div>
+    </div>

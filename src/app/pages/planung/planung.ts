@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Master } from '../../services/master';
+import { Child } from '../../models/child';
 
 @Component({
   selector: 'app-planung',
@@ -7,5 +9,14 @@ import { Component } from '@angular/core';
   styleUrl: './planung.css'
 })
 export class Planung {
+  
+  childrenList: Child[] = [];
 
+  masterService = inject(Master);
+
+  getAllChildren(){
+    this.masterService.getAllChildrenMaster().subscribe((res: any)=>{
+      this.childrenList = res;
+    })
+  }
 }

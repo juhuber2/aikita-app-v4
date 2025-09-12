@@ -19,20 +19,16 @@
     <div class="collapse navbar-collapse align-items-center mb-0" id="mynavbar">
       <ul class="navbar-nav mx-auto me-5">
         <li class="nav-item fs-5 me-5 text-center">
-          <div class="text-header">Kindergarten</div>
-          {{ kindergarten }}
+          <div class="text-header-top">Kindergarten</div>
+          <div class="text-header-bottom">{{ kindergarten }}</div>
         </li>
         <li class="nav-item fs-5 text-center me-5">
-          <div class="text-header">Adresse</div>
-          {{ adress }}
+          <div class="text-header-top">Kinder</div>
+          <div class="text-header-bottom">{{ numberChildren }}</div>
         </li>
         <li class="nav-item fs-5 text-center me-5">
-          <div class="text-header">Kinder</div>
-          {{ numberChildren }}
-        </li>
-        <li class="nav-item fs-5 text-center me-5">
-          <div class="text-header">PädagogInnen</div>
-          {{ numberBetreuer }}
+          <div class="text-header-top">PädagogInnen</div>
+          <div class="text-header-bottom">{{ numberBetreuer }}</div>
         </li>
       </ul>
 
@@ -62,37 +58,12 @@
         </a>
       </li>
       <li>
-        <a routerLink="/reports"
+        <a routerLink="/planung"
            class="nav-link text-white px-3 d-flex align-items-center">
-          <i class="bi bi-bar-chart me-2"></i> Reports
+          <i class="bi bi-bar-chart me-2"></i> Planung
         </a>
       </li>
-      <li>
-        <div class="accordion" id="accordionSidebar">
-          <div class="accordion-item bg-dark border-0">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed bg-dark text-white"
-                      type="button"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#managementMenu">
-                <i class="bi bi-gear me-2"></i> Management
-              </button>
-            </h2>
-            <div id="managementMenu" class="accordion-collapse collapse">
-              <div class="accordion-body p-0">
-                <ul class="list-unstyled ms-3">
-                  <li>
-                    <a routerLink="/users" class="nav-link text-white px-3 py-1">Users</a>
-                  </li>
-                  <li>
-                    <a routerLink="/products" class="nav-link text-white px-3 py-1">Products</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </li>
+      
       <li>
         <a routerLink="/settings"
            class="nav-link text-white px-3 d-flex align-items-center">
