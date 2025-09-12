@@ -1,15 +1,51 @@
-<!-- Button to open sidebar -->
-<button class="btn btn-primary m-3"
-        type="button"
-        data-bs-toggle="offcanvas"
-        data-bs-target="#offcanvasSidebar">
-  <i class="bi bi-list"></i> Menu
-</button>
+<!-- Navbar mit Sidebar-Button integriert -->
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
+  <div class="container-fluid d-flex align-items-center">
+
+    <!-- Sidebar Button (links) -->
+    <button class="btn btn-primary me-3"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasSidebar">
+      <i class="bi bi-list"></i> Menu
+    </button>
+
+    <!-- Navbar Toggle für kleine Screens -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar Inhalt -->
+    <div class="collapse navbar-collapse align-items-center mb-0" id="mynavbar">
+      <ul class="navbar-nav mx-auto me-5">
+        <li class="nav-item fs-5 me-5 text-center">
+          <div class="text-header">Kindergarten</div>
+          {{ kindergarten }}
+        </li>
+        <li class="nav-item fs-5 text-center me-5">
+          <div class="text-header">Adresse</div>
+          {{ adress }}
+        </li>
+        <li class="nav-item fs-5 text-center me-5">
+          <div class="text-header">Kinder</div>
+          {{ numberChildren }}
+        </li>
+        <li class="nav-item fs-5 text-center me-5">
+          <div class="text-header">PädagogInnen</div>
+          {{ numberBetreuer }}
+        </li>
+      </ul>
+
+      <!-- Log Off Button (rechts) -->
+      <form class="d-flex ms-auto align-items-center">
+        <button class="btn btn-outline-danger" (click)="onlogOff()" type="button">Log Off</button>
+      </form>
+    </div>
+  </div>
+</nav>
 
 <!-- Offcanvas Sidebar -->
-<div class="offcanvas offcanvas-start text-bg-dark"
-     tabindex="-1"
-     id="offcanvasSidebar">
+<div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasSidebar">
   <div class="offcanvas-header">
     <h5 class="offcanvas-title">MyApp</h5>
     <button type="button"
@@ -42,17 +78,14 @@
                 <i class="bi bi-gear me-2"></i> Management
               </button>
             </h2>
-            <div id="managementMenu"
-                 class="accordion-collapse collapse">
+            <div id="managementMenu" class="accordion-collapse collapse">
               <div class="accordion-body p-0">
                 <ul class="list-unstyled ms-3">
                   <li>
-                    <a routerLink="/users"
-                       class="nav-link text-white px-3 py-1">Users</a>
+                    <a routerLink="/users" class="nav-link text-white px-3 py-1">Users</a>
                   </li>
                   <li>
-                    <a routerLink="/products"
-                       class="nav-link text-white px-3 py-1">Products</a>
+                    <a routerLink="/products" class="nav-link text-white px-3 py-1">Products</a>
                   </li>
                 </ul>
               </div>
