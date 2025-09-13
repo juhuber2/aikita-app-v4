@@ -9,18 +9,6 @@ import { Router, RouterLink, RouterLinkActive, RouterModule, RouterOutlet } from
   styleUrl: './sidebar.css'
 })
 export class Sidebar {
-  /*sidebar*/
-  menu = [
-      { title: 'Dashboard', icon: 'bi bi-house', route: '/dashboard' },
-      { title: 'Reports', icon: 'bi bi-bar-chart', route: '/reports' },
-      {
-        title: 'Management', icon: 'bi bi-gear', children: [
-          { title: 'Users', route: '/management/users' },
-          { title: 'Products', route: '/management/products' }
-        ]
-      },
-      { title: 'Settings', icon: 'bi bi-sliders', route: '/settings' }
-    ];
 
   /*navbar*/
   kindergarten: string = "Caritas Linz";
