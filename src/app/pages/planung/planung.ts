@@ -19,13 +19,29 @@ export class Planung implements OnInit {
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
-       this.childForm = this.fb.group({
-        childID: ['0'],
-        gender: ['', Validators.required],
-        age: ['', Validators.required],
-        observation: ['', Validators.required]
-        
-        });
+		this.childForm = this.fb.group({
+			childID: ['0'],
+			gender: ['', Validators.required],
+			age: ['', Validators.required],
+			observation: ['', Validators.required],
+			area: [''],
+			sub: [''],
+			subsec: [''],
+			goal: [''],
+			activity: [''],
+			ageOut: [''],
+			modelId: [''],
+			promptV: [''],
+			expires: ['']
+		});
+
+    this.getAllChildren();
+  }
+
+getAllChildren(){
+    this.masterService.getAllChildrenMaster().subscribe((res: any)=>{
+      this.childrenList = res;
+    })
   }
 
   addChildren() {
@@ -37,7 +53,7 @@ export class Planung implements OnInit {
 
     this.masterService.addChildrenMaster(this.childForm.value).subscribe(res => {
       this.childrenList.push(res);  //zur Tabelle hinzufügen
-      this.childForm.reset({ childID: '0' }); //Tabelle reset
+      this.childForm.reset({ childID: '0' }); //Formular reset
       alert("Kind erfolgreich hinzugefügt");
     })
   }

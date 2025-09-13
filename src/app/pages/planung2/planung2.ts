@@ -16,15 +16,24 @@ childrenList: Child[] = [];
 
   constructor(private fb: FormBuilder) {}
 
-  ngOnInit(): void {
-       this.childForm = this.fb.group({
-        childID: ['0'],
-        gender: ['', Validators.required],
-        age: ['', Validators.required],
-        observation: ['', Validators.required]
-        });
+ 	ngOnInit(): void {
+		this.childForm = this.fb.group({
+			childID: ['0'],
+			gender: ['', Validators.required],
+			age: ['', Validators.required],
+			observation: ['', Validators.required],
+			area: [''],
+			sub: [''],
+			subsec: [''],
+			goal: [''],
+			activity: [''],
+			ageOut: [''],
+			modelId: [''],
+			promptV: [''],
+			expires: ['']
+		});
 
-        this.getAllChildren();
+    this.getAllChildren();
   }
 
   getAllChildren(){

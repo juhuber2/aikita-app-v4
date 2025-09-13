@@ -1,9 +1,7 @@
-<div class="col-6">
+<div class="row">
+  <!-- Linke Spalte: Beobachtungen hinzugügen -->
+  <div class="col-6">
     <form [formGroup]="childForm" (ngSubmit)="addChildren()" class="mb-3">
-      <div class="mb-3">
-        <button type="button" class="btn btn-outline-success me-2">Beobachtung hinzufügen</button>
-      </div>
-
       <div class="card">
         <div class="card-header fs-2 fw-bold">Beobachtung hinzufügen</div>
         <div class="card-body">
@@ -27,8 +25,13 @@
           <div class="row">
             <div class="col-6">
               <div class="mt-3">
-                <button type="button" class="btn btn-outline-secondary me-2" (click)="childForm.reset({ childID: '0' })">Reset</button>
-                <button type="submit" class="btn btn-outline-success me-2">Speichern</button>
+                <button type="button" class="btn btn-outline-secondary me-2" 
+                        (click)="childForm.reset({ childID: '0' })">
+                  Reset
+                </button>
+                <button type="submit" class="btn btn-outline-success me-2">
+                  Speichern
+                </button>
               </div>
             </div>
           </div>
@@ -36,3 +39,27 @@
       </div>
     </form>
   </div>
+
+ <!-- Rechte Spalte: Lösungen -->
+<div class="col-6">
+  <div class="card">
+    <div class="card-header fs-2 fw-bold">Einordnung Vorschlag</div>
+    <div class="card-body">
+      @for (item of childrenList; track $index ) {
+      <div class="mb-3 p-3 border rounded shadow-sm">
+        <p><strong>Nummer:</strong> {{ item.childID }}</p>
+        <p><strong>Geschlecht:</strong> {{ item.gender }}</p>
+        <p><strong>Alter:</strong> {{ item.age }}</p>
+        <p><strong>Beobachtung:</strong> {{ item.observation }}</p>
+        <p><strong>Entwicklungsbereich:</strong> {{ item.area }}</p>
+        <p><strong>Teilbereich:</strong> {{ item.sub }}</p>
+        <p><strong>Unterbereich:</strong> {{ item.subsec }}</p>
+        <p><strong>Ziel:</strong> {{ item.goal }}</p>
+        <p><strong>Aktivität:</strong> {{ item.activity }}</p>
+        <p><strong>Altersgruppe:</strong> {{ item.ageOut }}</p>
+        </div>
+       }
+       </div>
+    </div>
+  </div>
+</div>
