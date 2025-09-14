@@ -5,4 +5,10 @@
 p {
     margin-top: 2em;
     margin-bottom: 4em;
+    font-size: 1.4rem;
+}
+
+h1 {
+    color: #2C4BB0;
+    font-weight: bold;
 }

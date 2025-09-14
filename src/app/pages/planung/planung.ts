@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { NgFor, NgIf } from '@angular/common';  // <-- Wichtig!
+import { NgFor, NgIf } from '@angular/common';
 import { Master } from '../../services/master';
 import { Child } from '../../models/child';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -13,8 +13,8 @@ import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators } 
 export class Planung implements OnInit {
 
   childrenList: Child[] = [];
-  childForm!: FormGroup; // linkes Formular
-  solutionForm!: FormGroup; // rechtes Formular
+  childForm!: FormGroup; 
+  solutionForm!: FormGroup; 
   masterService = inject(Master);
 
   areaList: any[] = [];
@@ -62,21 +62,15 @@ export class Planung implements OnInit {
 
   // ---- Daten laden ----
   loadArea() {
-    this.masterService.getAreaDataMaster().subscribe((res: any) => {
+    this.masterService.getAreaDataMaster().subscribe((res: any[]) => {
       this.areaList = res;
     });
   }
 
   // ---- CRUD ----
-  getAllChildren(){
-    this.masterService.getAllChildrenMaster().subscribe((res: any)=>{
+  getAllChildren() {
+    this.masterService.getAllChildrenMaster().subscribe((res: Child[]) => {
       this.childrenList = res;
-    });
-  }
-
-  getChildById(id: any) {
-    this.masterService.getChildByIdMaster(id).subscribe((res: any)=>{
-      this.childrenList = [res]; 
     });
   }
 
@@ -84,38 +78,43 @@ export class Planung implements OnInit {
     if (this.childForm.invalid) {
       alert("Dateneingabe überprüfen");
       return;
-    } else {
-      this.showSolution = true;
     }
 
-    const formValues = this.childForm.value;
+    this.showSolution = true;
 
-    this.masterService.addChildrenMaster(formValues).subscribe(res => {
-      this.childrenList.push(res);  
-      this.solutionForm.patchValue(res);  
-      this.childForm.reset({ childID: '0' }); 
+    const formValues: Child = this.childForm.value as Child;
+
+    this.masterService.addChildrenMaster(formValues).subscribe((res: Child) => {
+      this.childrenList.push(res);
+      this.solutionForm.patchValue(res);
+      this.childForm.reset({ childID: '0' });
       alert("Kind erfolgreich hinzugefügt");
     });
   }
 
   updateChildren() {
     if (this.solutionForm.invalid) {
-    alert("Bitte alle Pflichtfelder ausfüllen!");
-    return;
+      alert("Bitte alle Pflichtfelder ausfüllen!");
+      return;
     }
 
-  const updatedChild = this.solutionForm.value;   //  Formulardaten
-  const id = updatedChild.childID;                // ID aus Formular holen
+    const updatedChild: Child = this.solutionForm.value as Child;
+    const id = updatedChild.childID;
 
     this.masterService.updateChildMaster(id, updatedChild).subscribe({
-      next: () => {
+      next: (res: Child) => {
+        // Aktualisieren in childrenList
+        const index = this.childrenList.findIndex(c => c.childID === id);
+        if (index !== -1) {
+          this.childrenList[index] = res;
+        }
         alert('Kind erfolgreich upgedated');
       },
       error: (err) => {
-      console.error('Update fehlgeschlagen:', err);
-      alert('Fehler beim Update');
-    }
-    })
+        console.error('Update fehlgeschlagen:', err);
+        alert('Fehler beim Update');
+      }
+    });
   }
 
   // ---- Auswahl ----

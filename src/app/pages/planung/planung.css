@@ -2,3 +2,12 @@
     min-height: 100px;
     min-width: 500px;
 }
+
+.card-header{
+    background-color: #2C4BB0;
+    color: white
+}
+
+.text-header {
+    font-weight: bold;
+}

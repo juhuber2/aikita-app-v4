@@ -1,8 +1,41 @@
 .text-header-top {
-    color: rgb(69, 216, 167);
+    color: #198754
 }
 
 .text-header-bottom{
 font-family: "KGSecondChancesSketch";
 font-size: x-large;
+}
+
+.sidebar-text {
+    font-family: "Kindergarten";
+    font-size: xx-large;
+    color: #38393b;
+    margin-bottom: 2rem;
+}
+
+.custom-sidebar-bg {
+  background-image: url(/backgroundSidebar.png);
+  background-size: cover;
+
+}
+
+.custom-sidebar-bg i {
+  color: #38393b;
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.logo {
+  width: 20rem;
+  height: auto;
+  margin-bottom: 2rem;
+}
+
+.sidebar-text:hover {
+  color: #2C4BB0;
+}
+
+.nav-link:hover i {
+  color: #2C4BB0;
 }
