@@ -1,3 +1,4 @@
 .textarea {
-    width: auto; height: 10em;
+    min-height: 100px;
+    min-width: 500px;
 }
