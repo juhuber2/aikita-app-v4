@@ -98,7 +98,27 @@ export class Planung implements OnInit {
     });
   }
 
-  // ---- Auswahlsteuerung ----
+  updateChildren() {
+    if (this.solutionForm.invalid) {
+    alert("Bitte alle Pflichtfelder ausfüllen!");
+    return;
+    }
+
+  const updatedChild = this.solutionForm.value;   //  Formulardaten
+  const id = updatedChild.childID;                // ID aus Formular holen
+
+    this.masterService.updateChildMaster(id, updatedChild).subscribe({
+      next: () => {
+        alert('Kind erfolgreich upgedated');
+      },
+      error: (err) => {
+      console.error('Update fehlgeschlagen:', err);
+      alert('Fehler beim Update');
+    }
+    })
+  }
+
+  // ---- Auswahl ----
   onAreaChange() {
     const areaName = this.childForm.get('area')?.value || this.solutionForm.get('area')?.value;
     const selectedArea = this.areaList.find(a => a.name === areaName);
