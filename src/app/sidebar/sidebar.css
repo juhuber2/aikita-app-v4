@@ -1,5 +1,5 @@
 .text-header-top {
-    color: #198754
+    color: #2C4BB0
 }
 
 .text-header-bottom{
@@ -8,34 +8,44 @@ font-size: x-large;
 }
 
 .sidebar-text {
-    font-family: "Kindergarten";
-    font-size: xx-large;
-    color: #38393b;
-    margin-bottom: 2rem;
+    font-family: "KGSecondChancesSketch";
+    color: #ffffff;
 }
 
 .custom-sidebar-bg {
-  background-image: url(/backgroundSidebar.png);
-  background-size: cover;
-
+ background: linear-gradient(180deg, #2C4BB0 0%, #1e3a8a 100%);
 }
 
 .custom-sidebar-bg i {
-  color: #38393b;
-  font-size: 1.5rem;
+ 
+  font-size: 0.9rem;
   margin-bottom: 2rem;
 }
 
 .logo {
-  width: 20rem;
+  margin-top: 1.5rem;
+  width: 10rem;
   height: auto;
   margin-bottom: 2rem;
 }
 
-.sidebar-text:hover {
-  color: #2C4BB0;
+.nav-link:hover i {
+  color: #000000;
 }
 
-.nav-link:hover i {
-  color: #2C4BB0;
+#offcanvasSidebar {
+  width: 250px;
+}
+
+#offcanvasSidebar .sidebar-text {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+#offcanvasSidebar .sidebar-text-ki {
+  color: #ffcc00;
+}
+
+.icon-ki {
+  color: #ffcc00;
 }

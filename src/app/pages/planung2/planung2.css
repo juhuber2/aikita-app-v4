@@ -1,5 +1,38 @@
-.card-header{
-    background-color: #2C4BB0;
+/* Runde obere Ecken im Header */
+thead th:first-child {
+  border-top-left-radius: 0.5rem;
+}
+
+thead th:last-child {
+  border-top-right-radius: 0.5rem;
+}
+
+/* Sticky Header */
+thead th {
+  position: sticky;
+  top: 0;
+  background-color: #2C4BB0; /* Lila Header wie im Screenshot */
+  color: white;
+  z-index: 10;
+}
+
+.table th, .table td {
+  vertical-align: middle;
+}
+
+h1 {
+    margin-top: 2rem;
+    font-family: "KGSecondChancesSketch";
+    color: #198754;
+    font-size: 4rem;
+}
+
+h4 {
+    margin-top: 1.5rem;
+    color: gray;
+}
+
+.table th {
+    font-size: 1.5rem;
     color: white;
-    font-family: 'KGSecondChancesSketch';
 }
