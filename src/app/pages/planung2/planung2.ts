@@ -37,8 +37,16 @@ childrenList: Child[] = [];
   }
 
   getAllChildren(){
-    this.masterService.getAllChildrenMaster().subscribe((res: any)=>{
-      this.childrenList = res;
-    })
+   this.masterService.getAllChildrenMaster().subscribe({
+  	next: (res: any) => {
+	console.log('Server antwortet:', res);
+    this.childrenList = res;
+    debugger;
+  	},
+  	error: (error) => {
+		debugger;
+		alert(error.message);
+	}
+	});
   }
 }

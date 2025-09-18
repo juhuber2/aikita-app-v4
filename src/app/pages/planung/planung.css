@@ -12,3 +12,49 @@
 .text-header {
     font-weight: bold;
 }
+
+h1 {
+    margin-top: 2rem;
+    font-family: "KGSecondChancesSketch";
+    color: #198754;
+    font-size: 4rem;
+}
+
+h4 {
+    margin-top: 1.5rem;
+    color: gray;
+}
+
+.custom-textarea {
+  width: 300px;  
+  height: 150px;  
+  resize: vertical;
+}
+
+.container_bottom {
+    width: 50%; /* Nimmt 90% der Breite des Eltern-Elements ein */
+    max-width: 1200px; /* Die maximale Breite des Containers */
+    height: 200px; /* Eine feste Höhe */
+    margin: 0 auto; /* Zentriert den Container auf der Seite */
+}
+
+.center {
+  display: flex;
+  justify-content: center; /* horizontal */
+  align-items: center;     /* vertikal */
+  height: 200px; /* nur Beispielhöhe */
+}
+
+
+/*
+.magic {
+  animation: hideGif 3s forwards;
+}
+
+@keyframes hideGif {
+  to {
+    opacity: 0; 
+    visibility: hidden;
+  }
+}
+*/

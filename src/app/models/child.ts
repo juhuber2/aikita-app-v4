@@ -1,9 +1,9 @@
 export interface Child {
     childID: string;
-	name: string;
     gender: string;
     age: string;
     observation: string;
+	name: string;
     area: string;
 	sub: string;
 	subsec: string;

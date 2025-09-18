@@ -10,7 +10,7 @@ import { ChildGroup } from '../models/child-group';
 export class Master {
   private childrenUrl = 'https://68c3eac481ff90c8e61a9272.mockapi.io/aikita/children';
   private selectionUrl = 'https://68c3eac481ff90c8e61a9272.mockapi.io/aikita/selection';
-  private childGroupUrl = '';
+  private childGroupUrl = 'https://68c3eac481ff90c8e61a9272.mockapi.io/aikita/childGroup';
 
   constructor(private http: HttpClient) {}
 

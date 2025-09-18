@@ -23,15 +23,20 @@ export class Planung implements OnInit {
 
   showSolution = false;
 
+  fullText: string = 'Gib hier deine Beoabchtung zu einem Kind ein.';
+  displayText: string = '';
+  currentIndex: number = 0;
+
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
     // linkes Formular
     this.childForm = this.fb.group({
       childID: [null],
-      gender: ['', Validators.required],
-      age: ['', Validators.required],
+      gender: [''],
+      age: [''],
       observation: ['', Validators.required],
+      name: ['', Validators.required],
       area: [''],
       sub: [''],
       subsec: [''],
@@ -49,6 +54,7 @@ export class Planung implements OnInit {
       gender: [''],
       age: [''],
       observation: [''],
+      name: [''],
       area: [''],
       sub: [''],
       subsec: [''],
@@ -57,7 +63,19 @@ export class Planung implements OnInit {
       ageOut: [''],
     });
 
+    this.startTyping();
     this.loadArea();
+  }
+
+  startTyping() {
+    const interval = setInterval(() => {
+      if (this.currentIndex < this.fullText.length) {
+        this.displayText += this.fullText[this.currentIndex];
+        this.currentIndex++;
+      } else {
+        clearInterval(interval); // stoppt, wenn fertig
+      }
+    }, 100); // 100 ms pro Zeichen
   }
 
   // ---- Daten laden ----
@@ -88,7 +106,6 @@ export class Planung implements OnInit {
       this.childrenList.push(res);
       this.solutionForm.patchValue(res);
       this.childForm.reset({ childID: '0' });
-      alert("Kind erfolgreich hinzugefügt");
     });
   }
 

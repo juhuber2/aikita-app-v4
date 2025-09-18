@@ -1,0 +1,42 @@
+    .login-container {
+      display: flex;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .login-card {
+      padding: 40px;
+      width: 350px;
+    }
+
+    .login-card h3 {
+      text-align: center;
+      color: #fff;
+      margin-bottom: 25px;
+    }
+
+    .form-control {
+      background-color: rgba(255,255,255,0.2);
+      border: none;
+      color: #fff;
+    }
+
+    .form-control::placeholder {
+      color: #eee;
+    }
+
+    .btn-login {
+      background: #667eea;
+      border: none;
+      transition: transform 0.2s;
+    }
+
+    .btn-login:hover {
+      background: #556cd6;
+      transform: scale(1.05);
+    }
+    

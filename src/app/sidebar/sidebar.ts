@@ -16,8 +16,9 @@ export class Sidebar {
   numberChildren: number = 23;
   numberBetreuer: number = 4;
 
-  router = inject(Router)
+  router = inject(Router);
   onlogOff() {
-    this.router.navigate(['/login'])
+    localStorage.removeItem('angularToken');
+    this.router.navigate(['/loginMain'])
   }
 }
