@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Child } from '../models/child';
 import { ChildGroup } from '../models/child-group';
+import { Suggestion } from '../models/suggestion';
 
 @Injectable({
   providedIn: 'root'
@@ -11,12 +12,18 @@ export class Master {
   private childrenUrl = 'https://68c3eac481ff90c8e61a9272.mockapi.io/aikita/children';
   private selectionUrl = 'https://68c3eac481ff90c8e61a9272.mockapi.io/aikita/selection';
   private childGroupUrl = 'https://68c3eac481ff90c8e61a9272.mockapi.io/aikita/childGroup';
+  private suggestionUrl = 'https://68c3eac481ff90c8e61a9272.mockapi.io/aikita/suggestion';
 
   constructor(private http: HttpClient) {}
 
   // ---- Auswahl ----
   getAreaDataMaster(): Observable<any[]> {
     return this.http.get<any[]>(this.selectionUrl);
+  }
+
+   // ---- Auswahl Solution ----
+  getSuggestionByIdDataMaster(id: number): Observable<Suggestion> {
+    return this.http.get<Suggestion>(`${this.suggestionUrl}/${id}`);
   }
 
   // ---- Kinder-CRUD ----

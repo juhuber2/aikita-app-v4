@@ -1,110 +1,111 @@
-<h1 class="text-center">Frag unsere AI</h1>
-<h4 class="text-center">{{ displayText }}</h4>
+<h1 class="text-center page-title">Frag die AI</h1>
 
-<!--Zeigt Beobachtungen an-->
+<!-- Beobachtungsfeld -->
 <div class="container my-5">
-      <form [formGroup]="childForm" (ngSubmit)="addChildren()" class="mb-3">
-        
-            <!-- Container zentriert -->
-              <div class="d-flex justify-content-center mt-3">
-                <textarea class="form-control w-50" rows="4" formControlName="observation" placeholder="Hier geht's los."></textarea>
-              </div>
-              
-            <div class="d-flex flex-column align-items-center text-center mt-4">
-              <label for="name" class="text-header mb-2">Name des Kindes</label>
-              <input class="form-control w-50" formControlName="name">
-            </div>
-
-            <div class="d-flex justify-content-center mt-4">
-              <button type="submit" class="btn btn-outline-success bi bi-stars">Antwort erstellen</button>
-            </div>
-
-            <!--
-            <div class="center">
-              <img class="magic" src="/zauberstab.gif" width="100">
-            </div>
-          -->
-
-      </form>
+  <form [formGroup]="childForm" class="mb-3">
+    <div class="d-flex justify-content-center mt-3 w-50 mx-auto position-relative">
+      <textarea class="form-control pe-5" rows="3" formControlName="observation"
+        placeholder="Gib den Namen des Kindes und deine Beobachtung ein (z. B. Dominik, teilt sein Pausenbrot.)"></textarea>
+      
+      <!-- Button im Feld -->
+      <button type="button" class="btn btn-outline-success bi bi-stars position-absolute"
+              style="right: 10px; bottom: 10px;" 
+              (click)="createAnswer()">
+      </button>
     </div>
+  </form>
+</div>
 
 
-    <!-- Rechte Spalte: Vorschlag -->
-  <div class="container_bottom">
-    <div *ngIf="showSolution">
-      <form [formGroup]="solutionForm" class="mb-3">
-        <div class="card">
-          <div class="card-header fs-2 text-center">Vorschlag</div>
-          <div class="card-body">
+<!-- AI-Vorschlagsformular -->
+<div class="container_bottom" *ngIf="showSolution">
+  <div class="row">
+    <form [formGroup]="solutionForm" class="mb-5">
+      <div class="card-0">
+        <div class="card-body">
+          <div class="row">
+            
+            <!-- linke Spalte -->
+            <div class="col-md-4 border-end left-column">
+              <h3 class="fs-4 mb-4 fw-bold">AI-Vorschlag für Dominik</h3>
+              <p class="text-muted fst-italic">
+                Die Daten wurden automatisch von der AI vorgeschlagen. 
+                Du kannst sie überprüfen und bei Bedarf anpassen. 
+              </p>
 
-            <div class="mb-3">
-              <label class="text-header">Nummer</label>
-              <input class="form-control" formControlName="childID">
-            </div>
-
-            <div class="row">
-              <div class="col-6 mb-3">
-                <label class="text-header">Geschlecht</label>
-                <input class="form-control" formControlName="gender">
+              <!-- Speichern -->
+              <div class="d-flex mt-3">
+                <button type="button" class="btn btn-outline-success" (click)="updateChildren()">
+                  Speichern der Daten
+                </button>
               </div>
-              <div class="col-6 mb-3">
-                <label class="text-header">Alter</label>
-                <input class="form-control" formControlName="age">
+            </div>
+
+            <!-- rechte Spalte -->
+            <div class="col-md-8 right-column">
+              <!-- Aktivität -->
+              <div class="mb-3 mb-5">
+                <label class="form-label fw-bold">Empfohlene Aktivität zur Förderung des Kindes
+                  <span class="badge bg-info text-dark">AI-Vorschlag</span>
+                </label>
+                <textarea class="form-control bg-warning-subtle" rows="2" formControlName="activity"></textarea>
               </div>
-            </div>
 
-            <div class="mb-3">
-              <label class="text-header">Beobachtung</label>
-              <input class="form-control" formControlName="observation">
-            </div>
+              <p class="text-muted fst text-center">Weitere AI-erstellte Vorschläge zum Dokumentationsblatt:</p>
 
-            <div class="mb-3">
-              <label class="text-header">Bereich</label>
-              <select class="form-select" formControlName="area" (change)="onAreaChange()">
-                <option value="">-- Bereich wählen --</option>
-                <option *ngFor="let area of areaList" [value]="area.name">{{ area.name }}</option>
-              </select>
-            </div>
+              <!-- Ziel + Altersgruppe -->
+              <div class="row">
+                <div class="col-md-8 mb-5">
+                  <label class="form-label fw-bold">Ziel
+                    <span class="badge bg-info text-dark">AI-Vorschlag</span>
+                  </label>
+                  <input type="text" class="form-control bg-warning-subtle" formControlName="goal">
+                </div>
 
-            <div class="mb-3">
-              <label class="text-header">Teilbereich</label>
-              <select class="form-select" formControlName="sub" (change)="onSubChange()">
-                <option value="">-- Teilbereich wählen --</option>
-                <option *ngFor="let sub of subList" [value]="sub.name">{{ sub.name }}</option>
-              </select>
-            </div>
+                <div class="col-md-4 mb-5">
+                  <label class="form-label fw-bold">Altersgruppe
+                    <span class="badge bg-info text-dark">AI-Vorschlag</span>
+                  </label>
+                  <input type="text" class="form-control bg-warning-subtle" formControlName="ageOut">
+                </div>
+              </div>
 
-            <div class="mb-3">
-              <label class="text-header">Unterbereich</label>
-              <select class="form-select" formControlName="subsec">
-                <option value="">-- Unterbereich wählen --</option>
-                <option *ngFor="let subsec of subsecList" [value]="subsec">{{ subsec }}</option>
-              </select>
-            </div>
+              <!-- Bereich, Teilbereich, Unterbereich -->
+              <div class="row">
+                <div class="col-md-4">
+                  <label class="form-label fw-bold">Bereich
+                    <span class="badge bg-info text-dark">AI-Vorschlag</span>
+                  </label>
+                  <select class="form-select" formControlName="area" (change)="onAreaChange()">
+                    <option value="">-- Bereich wählen --</option>
+                    <option *ngFor="let area of areaList" [value]="area.name">{{ area.name }}</option>
+                  </select>
+                </div>
 
-            <div class="mb-3">
-              <label class="text-header">Ziel</label>
-              <input class="form-control" formControlName="goal">
-            </div>
+                <div class="col-md-4">
+                  <label class="form-label fw-bold">Teilbereich
+                    <span class="badge bg-info text-dark">AI-Vorschlag</span>
+                  </label>
+                  <select class="form-select" formControlName="sub" (change)="onSubChange()">
+                    <option value="">-- Teilbereich wählen --</option>
+                    <option *ngFor="let sub of subList" [value]="sub.name">{{ sub.name }}</option>
+                  </select>
+                </div>
 
-            <div class="mb-3">
-              <label class="text-header">Aktivität</label>
-              <input class="form-control" formControlName="activity">
-            </div>
-
-            <div class="mb-3">
-              <label class="text-header">Altersgruppe</label>
-              <input class="form-control" formControlName="ageOut">
-            </div>
-
-            <div class="d-flex justify-content-center mt-3">
-              <button type="button" class="btn btn-outline-success" (click)="updateChildren()">
-                Speichern der Daten
-              </button>
-            </div>
-
+                <div class="col-md-4">
+                  <label class="form-label fw-bold">Unterbereich
+                    <span class="badge bg-info text-dark">AI-Vorschlag</span>
+                  </label>
+                  <select class="form-select" formControlName="subsec">
+                    <option value="">-- Unterbereich wählen --</option>
+                    <option *ngFor="let subsec of subsecList" [value]="subsec">{{ subsec }}</option>
+                  </select>
+                </div>
+              </div>
+            </div> <!-- rechte Spalte Ende -->
           </div>
         </div>
-      </form>
-    </div>
+      </div>
+    </form>
   </div>
+</div>

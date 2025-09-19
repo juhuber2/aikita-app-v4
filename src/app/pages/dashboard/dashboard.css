@@ -1,14 +1,6 @@
-.img-fluid {
-   max-width: 36em;
-}
-
-p {
-    margin-top: 1.4em;
-    margin-bottom: 0.5em;
-    font-size: 1.4rem;
-}
-
-h1 {
-    color: #2C4BB0;
-    font-weight: bold;
+.page-title {
+  margin-top: 2rem;
+  font-family: "KGSecondChancesSketch";
+  color: #198754;
+  font-size: 4rem;
 }
