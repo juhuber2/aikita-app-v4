@@ -1,25 +1,46 @@
 <h1 class="text-center">Beobachtung</h1>
 <h4 class="text-center">Hier werden Beobachtungen zu den einzelnen Kindern angezeigt.</h4>
-<!--Zeigt Beobachtungen an-->
+
 <div class="container my-5">
-    <table class="table table-hover table-responsive shadow rounded text-center">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Geschlecht</th>
-              <th>Alter</th>
-              <th>Beobachtung</th>
-            </tr>
-          </thead>
-          <tbody>
-              @for (item of childrenList; track $index) {
-                <tr>
-                    <td>{{ item.name }}</td>
-                    <td>{{ item.gender }}</td>
-                    <td>{{ item.age }}</td>
-                    <td>{{ item.observation }}</td>
-                </tr>
-            }
-          </tbody>
-        </table>
+  <div class="row" id="childrenAccordion">
+    @for (item of childrenList; track $index; let i = $index) {
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card shadow rounded h-100">
+          <div class="card-body">
+            <h5 class="card-title fw-bold fs-2 text">{{ item.name }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">
+              {{ item.gender }} • {{ item.age }} Jahre
+            </h6>
+
+            <p class="card-text"><strong>Beobachtung:</strong> {{ item.observation }}</p>
+            <p class="card-text"><strong>Aktivität:</strong> {{ item.activity }}</p>
+
+
+            <!-- Button für Collapse -->
+            <button class="btn btn-sm btn-outline-primary mt-2"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    [attr.data-bs-target]="'#details-' + i"
+                    aria-expanded="false"
+                    [attr.aria-controls]="'details-' + i">
+              Details
+            </button>
+
+            <!-- Collapsible Bereich -->
+            <div class="collapse mt-3"
+                 [attr.id]="'details-' + i"
+                 data-bs-parent="#childrenAccordion">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>Entwicklungsbereich:</strong> {{ item.area }}</li>
+                <li class="list-group-item"><strong>Teilbereich:</strong> {{ item.sub }}</li>
+                <li class="list-group-item"><strong>Unterbereich:</strong> {{ item.subsec }}</li>
+                <li class="list-group-item"><strong>Ziel:</strong> {{ item.goal }}</li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
       </div>
+    }
+  </div>
+</div>

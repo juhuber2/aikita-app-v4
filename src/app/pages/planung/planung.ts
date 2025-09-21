@@ -95,6 +95,7 @@ export class Planung implements OnInit {
   // Speichern / Update
   updateChildren() {
     const updatedChild: Child = this.solutionForm.value as Child;
+    //const id = updatedChild.id;
     const id = updatedChild.id;
 
     this.masterService.updateChildMaster(id, updatedChild).subscribe({
@@ -107,4 +108,22 @@ export class Planung implements OnInit {
       },
     });
   }
+
+  createChild() {
+  const newChild: Child = this.solutionForm.value as Child;
+
+  // ⚠️ ID weglassen, wenn der Server selbst eine neue ID erstellt
+  delete (newChild as any).id;
+
+  this.masterService.addChildrenMaster(newChild).subscribe({
+    next: (res: Child) => {
+      alert('Neuer Datensatz erfolgreich gespeichert!');
+    },
+    error: (err) => {
+      console.error('Fehler beim Erstellen', err);
+      alert('Fehler beim Speichern');
+    },
+  });
+}
+
 }
