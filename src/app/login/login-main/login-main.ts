@@ -21,8 +21,8 @@ export class LoginMain {
   router = inject(Router);
 
  onLogin() {
-  //const apiUrl_prev = "https://freeapi.miniprojectideas.com/api/User/Login"
-  const apiUrl = "/api/proxy";
+  const apiUrl = "https://freeapi.miniprojectideas.com/api/User/Login"
+  //const apiUrl = "/api/proxy";
 
   const formValue = this.loginForm.value;
     this.http.post(apiUrl, formValue).subscribe({
