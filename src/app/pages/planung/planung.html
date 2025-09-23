@@ -1,4 +1,4 @@
-<h1 class="text-center page-title">Frag die AI</h1>
+<h1 class="text-center page-title">Frag die KI</h1>
 
 <!-- Beobachtungsfeld -->
 <div class="container my-5">
@@ -27,9 +27,9 @@
             
             <!-- linke Spalte -->
             <div class="col-md-4 border-end left-column">
-              <h3 class="fs-4 mb-4 fw-bold">AI-Vorschlag für Dominik</h3>
+              <h3 class="fs-4 mb-4 fw-bold">KI-Vorschlag für Dominik</h3>
               <p class="text-muted fst-italic">
-                Die Daten wurden automatisch von der AI vorgeschlagen. 
+                Die Daten wurden automatisch von der KI vorgeschlagen. 
                 Du kannst sie überprüfen und bei Bedarf anpassen. 
               </p>
 
@@ -45,25 +45,25 @@
               <!-- Aktivität -->
               <div class="mb-3 mb-5">
                 <label class="form-label fw-bold">Empfohlene Aktivität zur Förderung des Kindes
-                  <span class="badge bg-info text-dark">AI-Vorschlag</span>
+                  <span class="badge bg-info text-dark">KI-Vorschlag</span>
                 </label>
                 <textarea class="form-control bg-warning-subtle" rows="2" formControlName="activity"></textarea>
               </div>
 
-              <p class="text-muted fst text-center">Weitere AI-erstellte Vorschläge zum Dokumentationsblatt:</p>
+              <p class="text-muted fst text-center">Weitere KI-erstellte Vorschläge zum Dokumentationsblatt:</p>
 
               <!-- Ziel + Altersgruppe -->
               <div class="row">
                 <div class="col-md-8 mb-5">
                   <label class="form-label fw-bold">Ziel
-                    <span class="badge bg-info text-dark">AI-Vorschlag</span>
+                    <span class="badge bg-info text-dark">KI-Vorschlag</span>
                   </label>
                   <input type="text" class="form-control bg-warning-subtle" formControlName="goal">
                 </div>
 
                 <div class="col-md-4 mb-5">
                   <label class="form-label fw-bold">Altersgruppe
-                    <span class="badge bg-info text-dark">AI-Vorschlag</span>
+                    <span class="badge bg-info text-dark">KI-Vorschlag</span>
                   </label>
                   <input type="text" class="form-control bg-warning-subtle" formControlName="ageOut">
                 </div>
@@ -73,31 +73,31 @@
               <div class="row">
                 <div class="col-md-4">
                   <label class="form-label fw-bold">Bereich
-                    <span class="badge bg-info text-dark">AI-Vorschlag</span>
+                    <span class="badge bg-info text-dark">KI-Vorschlag</span>
                   </label>
                   <select class="form-select" formControlName="area" (change)="onAreaChange()">
                     <option value="">-- Bereich wählen --</option>
-                    <option *ngFor="let area of areaList" [value]="area.name">{{ area.name }}</option>
+                    <option *ngFor="let area of areaList" [value]="area.name" class="form-control bg-warning-subtle">{{ area.name }}</option>
                   </select>
                 </div>
 
                 <div class="col-md-4">
                   <label class="form-label fw-bold">Teilbereich
-                    <span class="badge bg-info text-dark">AI-Vorschlag</span>
+                    <span class="badge bg-info text-dark">KI-Vorschlag</span>
                   </label>
                   <select class="form-select" formControlName="sub" (change)="onSubChange()">
                     <option value="">-- Teilbereich wählen --</option>
-                    <option *ngFor="let sub of subList" [value]="sub.name">{{ sub.name }}</option>
+                    <option *ngFor="let sub of subList" [value]="sub.name" class="form-control bg-warning-subtle">{{ sub.name }}</option>
                   </select>
                 </div>
 
                 <div class="col-md-4">
                   <label class="form-label fw-bold">Unterbereich
-                    <span class="badge bg-info text-dark">AI-Vorschlag</span>
+                    <span class="badge bg-info text-dark">KI-Vorschlag</span>
                   </label>
                   <select class="form-select" formControlName="subsec">
                     <option value="">-- Unterbereich wählen --</option>
-                    <option *ngFor="let subsec of subsecList" [value]="subsec">{{ subsec }}</option>
+                    <option *ngFor="let subsec of subsecList" [value]="subsec" class="form-control bg-warning-subtle">{{ subsec }}</option>
                   </select>
                 </div>
               </div>

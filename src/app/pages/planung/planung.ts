@@ -112,7 +112,7 @@ export class Planung implements OnInit {
   createChild() {
   const newChild: Child = this.solutionForm.value as Child;
 
-  // ⚠️ ID weglassen, wenn der Server selbst eine neue ID erstellt
+  // ID weglassen, wenn der Server selbst eine neue ID erstellt
   delete (newChild as any).id;
 
   this.masterService.addChildrenMaster(newChild).subscribe({
