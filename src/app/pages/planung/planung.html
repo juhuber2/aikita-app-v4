@@ -75,9 +75,9 @@
                   <label class="form-label fw-bold">Bereich
                     <span class="badge bg-info text-dark">KI-Vorschlag</span>
                   </label>
-                  <select class="form-select" formControlName="area" (change)="onAreaChange()">
+                  <select class="form-select bg-warning-subtle" formControlName="area" (change)="onAreaChange()">
                     <option value="">-- Bereich wählen --</option>
-                    <option *ngFor="let area of areaList" [value]="area.name" class="form-control bg-warning-subtle">{{ area.name }}</option>
+                    <option *ngFor="let area of areaList" [value]="area.name">{{ area.name }}</option>
                   </select>
                 </div>
 
@@ -85,9 +85,9 @@
                   <label class="form-label fw-bold">Teilbereich
                     <span class="badge bg-info text-dark">KI-Vorschlag</span>
                   </label>
-                  <select class="form-select" formControlName="sub" (change)="onSubChange()">
+                  <select class="form-select bg-warning-subtle" formControlName="sub" (change)="onSubChange()">
                     <option value="">-- Teilbereich wählen --</option>
-                    <option *ngFor="let sub of subList" [value]="sub.name" class="form-control bg-warning-subtle">{{ sub.name }}</option>
+                    <option *ngFor="let sub of subList" [value]="sub.name">{{ sub.name }}</option>
                   </select>
                 </div>
 
@@ -95,9 +95,9 @@
                   <label class="form-label fw-bold">Unterbereich
                     <span class="badge bg-info text-dark">KI-Vorschlag</span>
                   </label>
-                  <select class="form-select" formControlName="subsec">
+                  <select class="form-select bg-warning-subtle" formControlName="subsec">
                     <option value="">-- Unterbereich wählen --</option>
-                    <option *ngFor="let subsec of subsecList" [value]="subsec" class="form-control bg-warning-subtle">{{ subsec }}</option>
+                    <option *ngFor="let subsec of subsecList" [value]="subsec">{{ subsec }}</option>
                   </select>
                 </div>
               </div>
