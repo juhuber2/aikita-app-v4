@@ -34,6 +34,8 @@ export class Planung implements OnInit {
     // Rechtes Formular: Vorschlag
     this.solutionForm = this.fb.group({
       observation: [''],
+      gender: ['m'],
+			age: ['5'],
       area: [''],
       sub: [''],
       subsec: [''],
