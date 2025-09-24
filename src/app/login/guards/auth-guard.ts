@@ -5,7 +5,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   console.log('authGuard')
   const router = inject(Router);
 
-  const isLoggedIn = localStorage.getItem('angularToken');
+  const isLoggedIn = sessionStorage.getItem('angularToken');
   if (isLoggedIn != null) {
     return true;
   } else {

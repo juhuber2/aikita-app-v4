@@ -9,7 +9,7 @@
       
       <!-- Button im Feld -->
       <button type="button" class="btn btn-outline-success bi bi-stars position-absolute"
-              style="right: 10px; bottom: 10px;" 
+              style="right: 10px; bottom: 10px;" [disabled]="childForm.invalid"
               (click)="createAnswer()">
       </button>
     </div>

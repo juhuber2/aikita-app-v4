@@ -4,7 +4,7 @@ import { Router, RouterLink, RouterLinkActive, RouterModule, RouterOutlet } from
 
 @Component({
   selector: 'app-sidebar',
-  imports: [CommonModule, RouterModule, RouterLink, RouterLinkActive, RouterOutlet],
+  imports: [CommonModule, RouterModule, RouterLink, RouterOutlet],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.css'
 })
@@ -18,7 +18,7 @@ export class Sidebar {
 
   router = inject(Router);
   onlogOff() {
-    localStorage.removeItem('angularToken');
+    sessionStorage.removeItem('angularToken');
     this.router.navigate(['/loginMain'])
   }
 }

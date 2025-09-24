@@ -30,7 +30,7 @@ export class LoginMain {
         debugger;
           if (response.result) {
             alert("Login sucess");
-            localStorage.setItem('angularToken', response.data.token)
+            sessionStorage.setItem('angularToken', response.data.token)
             this.router.navigateByUrl("/dashboard")
           }
           else {
