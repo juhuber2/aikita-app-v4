@@ -36,3 +36,8 @@ h4 {
     font-size: 1rem;
     color: white;
 }
+
+.small_picture {
+    width: 4rem;
+    height: auto;
+}

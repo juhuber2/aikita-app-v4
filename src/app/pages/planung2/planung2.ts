@@ -10,9 +10,11 @@ import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, FormBuilder, 
   styleUrl: './planung2.css'
 })
 export class Planung2 implements OnInit {
-childrenList: Child[] = [];
+  childrenList: Child[] = [];
   childForm!: FormGroup;
   masterService = inject(Master);
+
+  
 
   constructor(private fb: FormBuilder) {}
 

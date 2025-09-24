@@ -6,7 +6,8 @@
     @for (item of childrenList; track $index; let i = $index) {
       <div class="col-md-6 col-lg-4 mb-4">
         <div class="card shadow rounded h-100">
-          <div class="card-body">
+          <div class="card-body position-relative">
+            <img class="small_picture position-absolute top-0 end-0 m-4" [src]="item.gender === 'w' ? '/girl.png' : '/boy.png'" alt="child"/>
             <h5 class="card-title fw-bold fs-2 text">{{ item.name }}</h5>
             <h6 class="card-subtitle mb-2 text-muted">
               {{ item.gender }} • {{ item.age }} Jahre
