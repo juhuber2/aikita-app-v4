@@ -19,8 +19,8 @@ childrenList: Child[] = [];
  	ngOnInit(): void {
 		this.childForm = this.fb.group({
 			childID: ['0'],
-			gender: ['', Validators.required],
-			age: ['', Validators.required],
+			gender: ['m', Validators.required],
+			age: ['4', Validators.required],
 			observation: ['', Validators.required],
 			area: [''],
 			sub: [''],
