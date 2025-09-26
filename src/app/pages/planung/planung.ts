@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, Form } from '@angular/forms';
 import { Master } from '../../services/master';
 import { Child } from '../../models/child';
@@ -127,5 +127,10 @@ export class Planung implements OnInit {
     },
   });
 }
+  neueBeobachtung() {
+      this.showSolution = false;
+      this.childForm.reset();     // Eingabe zurücksetzen
+      this.solutionForm.reset();  // optional auch KI-Formular zurücksetzen
+  }
 
 }

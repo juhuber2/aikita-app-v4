@@ -1,11 +1,11 @@
 <h1 class="text-center page-title">Frag die KI</h1>
 
-<!-- Beobachtungsfeld -->
-<div class="container my-5">
+<!-- ursprüngliches Beobachtungsfeld oben -->
+<div class="container my-5" *ngIf="!showSolution">
   <form [formGroup]="childForm" class="mb-3">
     <div class="d-flex justify-content-center mt-3 w-50 mx-auto position-relative">
       <textarea class="form-control pe-5" rows="3" formControlName="observation"
-        placeholder="Gib den Namen des Kindes und deine Beobachtung ein (z. B. Dominik, teilt sein Pausenbrot.)"></textarea>
+                placeholder="Gib den Namen des Kindes und deine Beobachtung ein (z. B. Dominik, teilt sein Pausenbrot.)"></textarea>
       
       <!-- Button im Feld -->
       <button type="button" class="btn btn-outline-success bi bi-stars position-absolute"
@@ -16,7 +16,6 @@
   </form>
 </div>
 
-
 <!-- AI-Vorschlagsformular -->
 <div class="container_bottom" *ngIf="showSolution">
   <div class="row">
@@ -24,28 +23,27 @@
       <div class="card-0">
         <div class="card-body">
           <div class="row">
-            
             <!-- linke Spalte -->
-            <div class="col-md-4 border-end left-column">
+            <div class="col-md-3 border-end left-column">
               <h3 class="fs-4 mb-4 fw-bold">KI-Vorschlag für Dominik</h3>
-              <p class="text-muted fst-italic">
-                Die Daten wurden automatisch von der KI vorgeschlagen. 
-                Du kannst sie überprüfen und bei Bedarf anpassen. 
-              </p>
 
-              <!-- Speichern -->
-              <div class="d-flex mt-3">
-                <!--<button type="button" class="btn btn-outline-success" (click)="updateChildren()">Update der Daten</button>-->
-                <button type="button" class="btn btn-outline-success" (click)="createChild()">Speichern der Daten</button>
+              <div class="mt-3 fw-bold text-success ">Beobachtung:</div>
+              <div class="mb-4">{{ childForm.get('observation')?.value }}</div>
+                
+              
+              <!-- Speichern / Neue Beobachtung -->
+              <div class="mt-3 d-flex flex-column gap-2">
+                <button type="button" class="btn btn-outline-success" (click)="createChild()">Speichern der Empfehlung</button>
+                <button type="button" class="btn btn-outline-success" (click)="neueBeobachtung()">Neue Beobachtung</button>
               </div>
             </div>
 
             <!-- rechte Spalte -->
-            <div class="col-md-8 right-column">
+            <div class="col-md-9 right-column">
               <!-- Aktivität -->
               <div class="mb-3 mb-5">
                 <label class="form-label fw-bold">Empfohlene Aktivität zur Förderung des Kindes
-                  <span class="badge bg-info text-dark">KI-Vorschlag</span>
+                  <span class="badge bg-info text-dark">KI</span>
                 </label>
                 <textarea class="form-control bg-warning-subtle" rows="2" formControlName="activity"></textarea>
               </div>
@@ -54,16 +52,16 @@
 
               <!-- Ziel + Altersgruppe -->
               <div class="row">
-                <div class="col-md-8 mb-5">
+                <div class="col-md-9 mb-5">
                   <label class="form-label fw-bold">Ziel
-                    <span class="badge bg-info text-dark">KI-Vorschlag</span>
+                    <span class="badge bg-info text-dark">KI</span>
                   </label>
                   <input type="text" class="form-control bg-warning-subtle" formControlName="goal">
                 </div>
 
-                <div class="col-md-4 mb-5">
+                <div class="col-md-3 mb-5">
                   <label class="form-label fw-bold">Altersgruppe
-                    <span class="badge bg-info text-dark">KI-Vorschlag</span>
+                    <span class="badge bg-info text-dark">KI</span>
                   </label>
                   <input type="text" class="form-control bg-warning-subtle" formControlName="ageOut">
                 </div>
@@ -73,7 +71,7 @@
               <div class="row">
                 <div class="col-md-4">
                   <label class="form-label fw-bold">Bereich
-                    <span class="badge bg-info text-dark">KI-Vorschlag</span>
+                    <span class="badge bg-info text-dark">KI</span>
                   </label>
                   <select class="form-select bg-warning-subtle" formControlName="area" (change)="onAreaChange()">
                     <option value="">-- Bereich wählen --</option>
@@ -83,7 +81,7 @@
 
                 <div class="col-md-4">
                   <label class="form-label fw-bold">Teilbereich
-                    <span class="badge bg-info text-dark">KI-Vorschlag</span>
+                    <span class="badge bg-info text-dark">KI</span>
                   </label>
                   <select class="form-select bg-warning-subtle" formControlName="sub" (change)="onSubChange()">
                     <option value="">-- Teilbereich wählen --</option>
@@ -93,7 +91,7 @@
 
                 <div class="col-md-4">
                   <label class="form-label fw-bold">Unterbereich
-                    <span class="badge bg-info text-dark">KI-Vorschlag</span>
+                    <span class="badge bg-info text-dark">KI</span>
                   </label>
                   <select class="form-select bg-warning-subtle" formControlName="subsec">
                     <option value="">-- Unterbereich wählen --</option>
