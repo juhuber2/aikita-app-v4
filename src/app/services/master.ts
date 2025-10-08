@@ -3,29 +3,60 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Child } from '../models/child';
 import { ChildGroup } from '../models/child-group';
-import { Suggestion } from '../models/suggestion';
+import { AreaModel } from '../models/suggestion';
+import { SubAreaModel } from '../models/suggestion';
+import { SubSectionModel } from '../models/suggestion';
+import { GoalModel } from '../models/suggestion';
+import { ActivityModel } from '../models/suggestion';
+import { ObservationModel } from '../models/suggestion';
+import { SuggestionModel } from '../models/suggestion';
 
 @Injectable({
   providedIn: 'root'
 })
 export class Master {
   private childrenUrl = 'https://68c3eac481ff90c8e61a9272.mockapi.io/aikita/children';
-  private selectionUrl = 'https://68c3eac481ff90c8e61a9272.mockapi.io/aikita/selection';
   private childGroupUrl = 'https://68c3eac481ff90c8e61a9272.mockapi.io/aikita/childGroup';
-  private suggestionUrl = 'https://68c3eac481ff90c8e61a9272.mockapi.io/aikita/suggestion';
+
+  private baseUrlPreSets = 'https://aikita-api-114119385008.europe-west1.run.app/api'; //alt, aber läuft noch
+  private baseUrlObservation = 'https://aikitabewebapi-114119385008.europe-west1.run.app/api'; //neu
 
   constructor(private http: HttpClient) {}
 
-  // ---- Auswahl ----
-  getAreaDataMaster(): Observable<any[]> {
-    return this.http.get<any[]>(this.selectionUrl);
+
+  // ---- Vorschläge in Formular einfügen ----
+  getAllAreas(): Observable<AreaModel[]> {
+    return this.http.get<AreaModel[]>(`${this.baseUrlPreSets}/areas`);
   }
 
-   // ---- Auswahl Solution ----
-  getSuggestionByIdDataMaster(id: number): Observable<Suggestion> {
-    return this.http.get<Suggestion>(`${this.suggestionUrl}/${id}`);
+  getSubareas(): Observable<SubAreaModel[]> {
+    return this.http.get<SubAreaModel[]>(`${this.baseUrlPreSets}/subareas`);
   }
 
+  getSubsections(): Observable<SubSectionModel[]> {
+    return this.http.get<SubSectionModel[]>(`${this.baseUrlPreSets}/subsections`);
+  }
+
+  getGoals(): Observable<GoalModel[]> {
+    return this.http.get<GoalModel[]>(`${this.baseUrlPreSets}/goals`);
+  }
+
+  getActivities(): Observable<ActivityModel[]> {
+    return this.http.get<ActivityModel[]>(`${this.baseUrlPreSets}/activities`);
+  }
+
+  //an Backend senden - nur observation
+  addObservation(observationData: ObservationModel): Observable<ObservationModel> {
+  return this.http.post<ObservationModel>(`${this.baseUrlObservation}/ai/infer/mock`, observationData);
+  }
+
+  //an Backend senden - KI + UserÄnderung
+  addSuggestion(data: any): Observable<any> {
+  return this.http.post<SuggestionModel>(`${this.baseUrlObservation}/ai/save/mock`, data);
+  }
+
+
+//------------------------------------------------------------------------------------------------------
   // ---- Kinder-CRUD ----
   getAllChildrenMaster(): Observable<Child[]> {
     return this.http.get<Child[]>(this.childrenUrl);

@@ -1,136 +1,194 @@
-import { Component, inject, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, Form } from '@angular/forms';
-import { Master } from '../../services/master';
-import { Child } from '../../models/child';
-import { Suggestion } from '../../models/suggestion';
+
+import { Component, inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NgFor, NgIf } from '@angular/common';
+import { Master } from '../../services/master';
+import {
+  AreaModel,
+  SubAreaModel,
+  SubSectionModel,
+  GoalModel,
+  ActivityModel,
+  ObservationModel,
+  SuggestionModel
+} from '../../models/suggestion'
 
 @Component({
   selector: 'app-planung',
-  imports: [ReactiveFormsModule, NgFor, NgIf],
+  imports: [ReactiveFormsModule, NgIf, NgFor],
   templateUrl: './planung.html',
   styleUrl: './planung.css'
 })
 export class Planung implements OnInit {
-  childForm!: FormGroup;
-  solutionForm!: FormGroup;
-
-  areaList: any[] = [];
-  subList: any[] = [];
-  subsecList: any[] = [];
-
+  form!: FormGroup;
+  formTemp!: FormGroup;
   showSolution = false;
 
-  masterService = inject(Master);
+  //Daten vom Backend
+  areasAll: AreaModel[] = [];
+  subareasAll: SubAreaModel[] = [];
+  subsectionsAll: SubSectionModel[] = [];
 
+  // Gefilterte Listen
+  areas: any[] = [];
+  subareas: any[] = [];
+  subsections: any[] = [];
+
+  masterService = inject(Master);
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
-    // Linkes Formular: Beobachtung
-    this.childForm = this.fb.group({
-      observation: ['', Validators.required],
+    //Areas laden
+    this.masterService.getAllAreas().subscribe({
+      next: (data) => (this.areas = data.map(a => a.definition)),
+      error: (err) => console.error('Fehler beim Laden der Bereiche', err)
     });
 
-    // Rechtes Formular: Vorschlag
-    this.solutionForm = this.fb.group({
-      observation: [''],
-      gender: ['w'],
-			age: ['4'],
-      area: [''],
-      sub: [''],
-      subsec: [''],
-      goal: [''],
-      ageOut: [''],
-      activity: [''],
-      id: [''],
+    //Subareas laden
+    this.masterService.getSubareas().subscribe({
+      next: (data) => (this.subareas = data.map(s => s.definition)),
+      error: (err) => console.error('Fehler beim Laden der Bereiche', err)
     });
 
-    // Bereichsdaten laden
-    this.masterService.getAreaDataMaster().subscribe((areas: any[]) => {
-      this.areaList = areas;
+
+    // --- Eingabeformular (wird gessendet) ---
+    this.form = this.fb.group({
+      childId: [1],
+      age: [null],
+      observation: ['']
     });
+
+    // --- Antwortformular (wird empfangen) ---
+    this.formTemp = this.fb.group({
+      resultId: [0],
+      resultToken: [null],
+      expiresAt: [null],
+      preview: this.fb.group({
+        area: [null],
+        subarea: [null],
+        subsection: [null],
+        goal: [null],
+        age: [null],
+        activity: [null],
+        confidence: [null],
+        resultId: [0],
+        resultToken: [null],
+        childId: [null]
+      })
+    });
+
+    this.loadData();
+    
+      // 🔹 Abhängigkeiten für Dropdowns
+      const previewGroup = this.formTemp.get('preview') as FormGroup;
+
+      // Bereich → Teilbereiche
+      previewGroup.get('area')?.valueChanges.subscribe((areaId) => {
+        this.subareas = this.subareasAll.filter(s => s.areaId === areaId);
+        previewGroup.patchValue({ subarea: null, subsection: null });
+        this.subsections = [];
+      });
+
+      // Teilbereich → Unterbereiche
+      previewGroup.get('subarea')?.valueChanges.subscribe((subId) => {
+        this.subsections = this.subsectionsAll.filter(s => s.subAreaId === subId);
+        previewGroup.patchValue({ subsection: null });
+      });
+    }
+
+     // Lade alle Listen vom Backend
+  loadData() {
+    this.masterService.getAllAreas().subscribe({
+      next: (data) => {
+        this.areasAll = data;
+        this.areas = data;
+      },
+      error: (err) => console.error('Fehler beim Laden der Bereiche', err)
+    });
+
+    this.masterService.getSubareas().subscribe({
+      next: (data) => (this.subareasAll = data),
+      error: (err) => console.error('Fehler beim Laden der Subareas', err)
+    });
+
+    this.masterService.getSubsections().subscribe({
+      next: (data) => (this.subsectionsAll = data),
+      error: (err) => console.error('Fehler beim Laden der Subsections', err)
+    });
+
   }
 
-  // Button: Antwort erstellen
+  // --- Anfrage an Server schicken ---
   createAnswer() {
     this.showSolution = true;
 
-    // Zuerst die Suggestion vom MockAPI laden
-    this.masterService.getSuggestionByIdDataMaster(2).subscribe((data: Suggestion) => {
-      // Lösung ins Formular patchen
-      this.solutionForm.patchValue({
-        observation: this.childForm.value.observation, // Beobachtung bleibt
-        area: data.area,
-        sub: data.sub,
-        subsec: data.subsec,
-        goal: data.goal,
-        ageOut: data.ageOut,
-        activity: data.activity,
-        id: data.id,
-      });
+    const formValue = this.form.value;
 
-      // Dropdowns vorbereiten
-      this.subList = this.areaList.find(a => a.name === data.area)?.sub || [];
-      this.subsecList = this.subList.find((s: any) => s.name === data.sub)?.subsec || [];
-    });
-  }
+    const fullData: ObservationModel = {
+      childID: formValue.childId,
+      age: Number(formValue.age) || 0,
+      observation: formValue.observation || 'Keine Beobachtung angegeben'
+    };
 
-  // Bereich ändern
-  onAreaChange() {
-    const areaName = this.solutionForm.get('area')?.value;
-    const selectedArea = this.areaList.find(a => a.name === areaName);
-    this.subList = selectedArea?.sub || [];
-    this.subsecList = [];
-    this.solutionForm.patchValue({ sub: '', subsec: '' });
-  }
+    this.masterService.addObservation(fullData).subscribe({
+      next: (response) => {
+        console.log('Antwort vom Server:', response);
 
-  // Teilbereich ändern
-  onSubChange() {
-    const subName = this.solutionForm.get('sub')?.value;
-    const areaName = this.solutionForm.get('area')?.value;
-    const selectedArea = this.areaList.find(a => a.name === areaName);
-    const selectedSub = selectedArea?.sub.find((s: any) => s.name === subName);
-    this.subsecList = selectedSub?.subsec || [];
-    this.solutionForm.patchValue({ subsec: '' });
-  }
+         // 🔹 1. Textnamen aus Response holen
+        const areaName = response.preview;
+        const subareaName = response.preview;
+        const subsectionName = response.preview;
 
-  // Speichern / Update
-  updateChildren() {
-    const updatedChild: Child = this.solutionForm.value as Child;
-    //const id = updatedChild.id;
-    const id = updatedChild.id;
+        // 🔹 2. IDs aus Listen suchen
+        const areaId = this.areasAll.find(a => a.definition === areaName)?.id ?? null;
+        const subareaId = this.subareasAll.find(s => s.definition === subareaName)?.id ?? null;
+        const subsectionId = this.subsectionsAll.find(s => s.definition === subsectionName)?.id ?? null;
 
-    this.masterService.updateChildMaster(id, updatedChild).subscribe({
-      next: (res: Child) => {
-        alert('Daten erfolgreich gespeichert!');
+        // Antwort ins zweite Formular (formTemp) schreiben:
+        this.formTemp.patchValue({
+          resultId: response.resultId,
+          resultToken: response.resultToken,
+          expiresAt: response.expiresAt,
+          preview: response.preview
+        });
+
+        alert('Beobachtung erfolgreich gesendet!');
       },
       error: (err) => {
-        console.error('Fehler beim Update', err);
-        alert('Fehler beim Speichern');
-      },
+        console.error('Fehler beim Speichern:', err);
+        alert('Fehler beim Speichern!');
+      }
     });
   }
 
-  createChild() {
-  const newChild: Child = this.solutionForm.value as Child;
 
-  // ID weglassen, wenn der Server selbst eine neue ID erstellt
-  delete (newChild as any).id;
+  //Daten werden and das Backend gesendet und gespeichert
+  saveSuggestion() {
+    const temp = this.formTemp.value;
+    const preview = temp.preview;
 
-  this.masterService.addChildrenMaster(newChild).subscribe({
-    next: (res: Child) => {
-      alert('Neuer Datensatz erfolgreich gespeichert!');
-    },
-    error: (err) => {
-      console.error('Fehler beim Erstellen', err);
-      alert('Fehler beim Speichern');
-    },
-  });
-}
-  neueBeobachtung() {
-      this.showSolution = false;
-      this.childForm.reset();     // Eingabe zurücksetzen
-      this.solutionForm.reset();  // optional auch KI-Formular zurücksetzen
-  }
+    const suggestion = {
+      area: preview.area,
+      subArea: preview.subarea,
+      subSection: preview.subsection,
+      goal: preview.goal,
+      activity: preview.activity,
+      age: Number(preview.age) || 0,
+      observation: this.form.value.observation,
+      resultId: temp.resultId,
+      resultToken: temp.resultToken,
+      childId: preview.childId
+  };
 
+    this.masterService.addSuggestion(suggestion).subscribe({
+        next: (response) => {
+          console.log('Suggestion gespeichert:', response);
+          alert('Empfehlung erfolgreich gespeichert!');
+        },
+        error: (err) => {
+          console.error('Fehler beim Speichern:', err);
+          alert('Fehler beim Speichern!');
+        }
+      });
+    }
 }

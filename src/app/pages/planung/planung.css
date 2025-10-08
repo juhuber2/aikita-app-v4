@@ -34,3 +34,11 @@
 .left-column {
   padding-right: 3rem; /* Abstand zur Linie */
 }
+
+.no-border {
+  border: none;       /* entfernt die Rahmenlinie */
+  box-shadow: none;   /* entfernt ggf. Schatten bei Fokus */
+  outline: none;      /* entfernt die Umrandung beim Fokussieren */
+  background-color: transparent; /* optional, damit kein Hintergrund sichtbar ist */
+}
+
