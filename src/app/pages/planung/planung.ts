@@ -38,19 +38,6 @@ export class Planung implements OnInit {
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
-    //Areas laden
-    this.masterService.getAllAreas().subscribe({
-      next: (data) => (this.areas = data.map(a => a.definition)),
-      error: (err) => console.error('Fehler beim Laden der Bereiche', err)
-    });
-
-    //Subareas laden
-    this.masterService.getSubareas().subscribe({
-      next: (data) => (this.subareas = data.map(s => s.definition)),
-      error: (err) => console.error('Fehler beim Laden der Bereiche', err)
-    });
-
-
     // --- Eingabeformular (wird gessendet) ---
     this.form = this.fb.group({
       childId: [1],
@@ -79,7 +66,7 @@ export class Planung implements OnInit {
 
     this.loadData();
     
-      // 🔹 Abhängigkeiten für Dropdowns
+      // Abhängigkeiten für Dropdowns
       const previewGroup = this.formTemp.get('preview') as FormGroup;
 
       // Bereich → Teilbereiche
