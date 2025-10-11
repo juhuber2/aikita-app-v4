@@ -26,23 +26,23 @@ export class Master {
 
   // ---- Vorschläge in Formular einfügen ----
   getAllAreas(): Observable<AreaModel[]> {
-    return this.http.get<AreaModel[]>(`${this.baseUrlPreSets}/areas`);
+    return this.http.get<AreaModel[]>(`${this.baseUrlObservation}/areas`);
   }
 
   getSubareas(): Observable<SubAreaModel[]> {
-    return this.http.get<SubAreaModel[]>(`${this.baseUrlPreSets}/subareas`);
+    return this.http.get<SubAreaModel[]>(`${this.baseUrlObservation}/subareas`);
   }
 
   getSubsections(): Observable<SubSectionModel[]> {
-    return this.http.get<SubSectionModel[]>(`${this.baseUrlPreSets}/subsections`);
+    return this.http.get<SubSectionModel[]>(`${this.baseUrlObservation}/subsections`);
   }
 
   getGoals(): Observable<GoalModel[]> {
-    return this.http.get<GoalModel[]>(`${this.baseUrlPreSets}/goals`);
+    return this.http.get<GoalModel[]>(`${this.baseUrlObservation}/goals`);
   }
 
   getActivities(): Observable<ActivityModel[]> {
-    return this.http.get<ActivityModel[]>(`${this.baseUrlPreSets}/activities`);
+    return this.http.get<ActivityModel[]>(`${this.baseUrlObservation}/activities`);
   }
 
   //an Backend senden - nur observation

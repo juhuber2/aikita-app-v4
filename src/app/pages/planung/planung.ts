@@ -142,8 +142,8 @@ export class Planung implements OnInit {
         alert('Beobachtung erfolgreich gesendet!');
       },
       error: (err) => {
-        console.error('Fehler beim Speichern:', err);
-        alert('Fehler beim Speichern!');
+        console.error('Fehler Beobachtung:', err);
+        alert('Fehler Beobachtung');
       }
     });
   }
