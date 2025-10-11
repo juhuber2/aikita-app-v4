@@ -1,6 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule, FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ChildGroup } from '../../models/child-group';
+import { GroupModel } from '../../models/child-group';
 import { Master } from '../../services/master';
 
 @Component({
@@ -17,6 +18,7 @@ export class Planung3 {
   form!: FormGroup;
   editMode = false;
   selectedId: number | null = null;
+  group: GroupModel[] = [];
 
   ngOnInit(): void {
     this.loadKinder();
@@ -54,6 +56,14 @@ export class Planung3 {
       });
     }
   }
+
+  //Nach Gruppe filtern
+  getChildGroup(id: number): void {
+     this.kinderService.getKinderNachGruppe(id).subscribe(data => this.kinder = data);
+  }
+
+
+
 
   //Bearbeiten starten
   editKind(kind: ChildGroup): void {

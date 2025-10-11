@@ -47,12 +47,12 @@ export class Master {
 
   //an Backend senden - nur observation
   addObservation(observationData: ObservationModel): Observable<ObservationModel> {
-  return this.http.post<ObservationModel>(`${this.baseUrlObservation}/ai/infer/mock`, observationData);
+  return this.http.post<ObservationModel>(`${this.baseUrlObservation}/ai/infer`, observationData);
   }
 
   //an Backend senden - KI + UserÄnderung
   addSuggestion(data: any): Observable<any> {
-  return this.http.post<SuggestionModel>(`${this.baseUrlObservation}/ai/save/mock`, data);
+  return this.http.post<SuggestionModel>(`${this.baseUrlObservation}/ai/save`, data);
   }
 
 
@@ -83,8 +83,8 @@ export class Master {
     return this.http.get<ChildGroup[]>(this.childGroupUrl);
   }
 
-  getKinderNachGruppe(gruppe: string): Observable<ChildGroup[]> {
-    return this.http.get<ChildGroup[]>(`${this.childGroupUrl}?gruppe=${gruppe}`);
+  getKinderNachGruppe(id: number): Observable<ChildGroup[]> {
+    return this.http.get<ChildGroup[]>(`${this.baseUrlObservation}/groups/${id}`);
   }
 
   getKindById(id: number): Observable<ChildGroup> {

@@ -4,3 +4,9 @@ export interface ChildGroup {
     alter: number;
     gruppe: string;
 }
+
+
+export interface GroupModel {
+    id: number;
+    name: string;
+}

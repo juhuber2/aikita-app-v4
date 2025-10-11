@@ -42,6 +42,29 @@
           }
         </div>
       </form>
+
+      <form [formGroup]="form" class="row g-3 justify-content-center mt-4">
+
+       
+
+        <div class="col-md-3 d-flex align-items-end">
+          <button type="button" class="btn btn-outline-success ms-2" (click)="getChildGroup(2)">
+            Kinder nach Gruppe anzeigen
+          </button>
+        </div>
+
+        <div class="col-md-3">
+          <label for="gruppe" class="form-label fw-bold">Gruppe</label>
+          <select id="gruppe" formControlName="gruppe" class="form-select">
+            <option value="">Bitte wählen</option>
+            <option *ngFor="let g of groups" [ngValue]="g.id">
+                    {{ g.definition }}
+                  </option>
+          </select>
+        </div>
+
+      </form>
+
   </div>
 </div>
 
