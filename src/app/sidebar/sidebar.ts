@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive, RouterModule, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
+import { Master } from '../services/master';
+import { Settings } from '../models/settings';
 
 @Component({
   selector: 'app-sidebar',
@@ -11,10 +13,20 @@ import { Router, RouterLink, RouterLinkActive, RouterModule, RouterOutlet } from
 export class Sidebar {
 
   /*navbar*/
-  kindergarten: string = "Caritas Linz";
-  adress: string = "Pillweinstraße 11";
-  numberChildren: number = 23;
-  numberBetreuer: number = 4;
+  kindergarten: string = '';
+  numberChildren: number = 0;
+  numberBetreuer: number = 0;
+
+  constructor(private s: Master) {}
+
+   ngOnInit(): void {
+    // 👇 Jetzt "abonniert" sich die Sidebar auf Änderungen im Service
+    this.s.settings$.subscribe((current: Settings) => {
+      this.kindergarten = current.kindergarten;
+      this.numberChildren = current.numberChildren;
+      this.numberBetreuer = current.numberBetreuer;
+    });
+  }
 
   router = inject(Router);
   onlogOff() {

@@ -1,0 +1,54 @@
+<!-- src/app/components/planung4/planung4.html -->
+
+<h2>Einstellungen</h2>
+
+<form [formGroup]="settingsForm" (ngSubmit)="save()">
+
+  <!-- Kindergarten-Name -->
+  <div class="form-group">
+    <label for="kindergarten">Kindergarten</label>
+    <input
+      id="kindergarten"
+      type="text"
+      formControlName="kindergarten"
+      placeholder="Name des Kindergartens"
+    />
+    <div class="error" *ngIf="settingsForm.get('kindergarten')?.invalid && settingsForm.get('kindergarten')?.touched">
+      <small>Bitte einen Kindergarten-Namen eingeben.</small>
+    </div>
+  </div>
+
+  <!-- Anzahl Kinder -->
+  <div class="form-group">
+    <label for="numberChildren">Anzahl Kinder</label>
+    <input
+      id="numberChildren"
+      type="number"
+      formControlName="numberChildren"
+      min="0"
+      placeholder="z. B. 23"
+    />
+    <div class="error" *ngIf="settingsForm.get('numberChildren')?.invalid && settingsForm.get('numberChildren')?.touched">
+      <small>Bitte eine gültige Zahl ≥ 0 eingeben.</small>
+    </div>
+  </div>
+
+  <!-- Anzahl Betreuer -->
+  <div class="form-group">
+    <label for="numberBetreuer">Anzahl Betreuer</label>
+    <input
+      id="numberBetreuer"
+      type="number"
+      formControlName="numberBetreuer"
+      min="0"
+      placeholder="z. B. 4"
+    />
+    <div class="error" *ngIf="settingsForm.get('numberBetreuer')?.invalid && settingsForm.get('numberBetreuer')?.touched">
+      <small>Bitte eine gültige Zahl ≥ 0 eingeben.</small>
+    </div>
+  </div>
+
+  <!-- Speichern-Button -->
+  <button type="submit" [disabled]="settingsForm.invalid">💾 Speichern</button>
+
+</form>

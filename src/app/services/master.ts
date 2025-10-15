@@ -10,6 +10,8 @@ import { GoalModel } from '../models/suggestion';
 import { ActivityModel } from '../models/suggestion';
 import { ObservationModel } from '../models/suggestion';
 import { SuggestionModel } from '../models/suggestion';
+import { Settings } from '../models/settings';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -101,5 +103,33 @@ export class Master {
 
   deleteKind(id: number): Observable<void> {
     return this.http.delete<void>(`${this.childGroupUrl}/${id}`);
+  }
+
+
+//------------------------------------------------------------------------------------------------------
+  // ---- Settings ----
+ // 1Die eigentlichen Daten (Startwerte)
+  private settings: Settings = {
+    kindergarten: 'Caritas Linz',
+    numberChildren: 23,
+    numberBetreuer: 4
+  };
+
+  // Das Subject, das immer den aktuellen Wert kennt und Änderungen weitergibt
+  private settingsSubject = new BehaviorSubject<Settings>(this.settings);
+
+  // Öffentliches Observable, das andere Komponenten abonnieren können
+  settings$ = this.settingsSubject.asObservable();
+
+  // Getter – gibt die aktuellen Werte zurück (z. B. beim Init)
+  getSettings(): Settings {
+    return { ...this.settings };
+  }
+
+  // Setter – aktualisiert die Werte und informiert alle Abonnenten
+  updateSettings(newSettings: Settings): void {
+    this.settings = { ...newSettings };
+    this.settingsSubject.next(this.settings);
+    console.log('Updated settings:', this.settings);
   }
 }

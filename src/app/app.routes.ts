@@ -4,6 +4,7 @@ import { LoginMain } from './login/login-main/login-main';
 import { Dashboard } from './pages/dashboard/dashboard';
 import { Planung2 } from './pages/planung2/planung2';
 import { Planung3 } from './pages/planung3/planung3';
+import { Planung4 } from './pages/planung4/planung4';
 import { authGuard } from './login/guards/auth-guard';
 import { Sidebar } from './sidebar/sidebar';
 
@@ -17,7 +18,8 @@ export const routes: Routes = [
                 { path: 'dashboard', component: Dashboard, title: 'Dashboard' },
                 { path: 'planung', component: Planung, title: 'Planung' },
                 { path: 'planung2', component: Planung2, title: 'Planung2' },
-                { path: 'planung3', component: Planung3, title: 'Planung3' }
+                { path: 'planung3', component: Planung3, title: 'Planung3' },
+                { path: 'planung4', component: Planung4, title: 'Planung4' }
             ]   
     },
 ];
