@@ -1,13 +1,19 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 
 export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
-  debugger;
   const token = sessionStorage.getItem("angularToken");
 
   if (token) {
+    // Backend erwartet X-Session-Token Header
     req = req.clone({
-      setHeaders: { Authorization: `Bearer ${token}` }
+      setHeaders: { 
+        'X-Session-Token': token
+      }
     });
-  } 
-    return next(req);
+    console.log('🔑 Token hinzugefügt:', token.substring(0, 20) + '...');
+  } else {
+    console.warn('⚠️ Kein Token in sessionStorage gefunden!');
+  }
+  
+  return next(req);
 };

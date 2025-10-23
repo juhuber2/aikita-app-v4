@@ -1,7 +1,6 @@
 
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { NgFor, NgIf } from '@angular/common';
 import { Master } from '../../services/master';
 import {
   AreaModel,
@@ -15,7 +14,7 @@ import {
 
 @Component({
   selector: 'app-planung',
-  imports: [ReactiveFormsModule, NgIf, NgFor],
+  imports: [ReactiveFormsModule],
   templateUrl: './planung.html',
   styleUrl: './planung.css'
 })
@@ -112,14 +111,16 @@ export class Planung implements OnInit {
     const formValue = this.form.value;
 
     const fullData: ObservationModel = {
-      childID: formValue.childId,
+      id: formValue.childId,  // Geändert von childID zu id
       age: Number(formValue.age) || 0,
       observation: formValue.observation || 'Keine Beobachtung angegeben'
     };
 
+    console.log('📤 Sende Beobachtung:', fullData);
+
     this.masterService.addObservation(fullData).subscribe({
       next: (response) => {
-        console.log('Antwort vom Server:', response);
+        console.log('✅ Antwort vom Server:', response);
 
          // 🔹 1. Textnamen aus Response holen
         const areaName = response.preview;
@@ -139,11 +140,29 @@ export class Planung implements OnInit {
           preview: response.preview
         });
 
-        alert('Beobachtung erfolgreich gesendet!');
+        alert('✅ Beobachtung erfolgreich gesendet!');
       },
       error: (err) => {
-        console.error('Fehler Beobachtung:', err);
-        alert('Fehler Beobachtung');
+        console.error('❌ Fehler bei Beobachtung:', err);
+        console.error('Status:', err.status);
+        console.error('Message:', err.message);
+        console.error('Error Object:', err.error);
+        
+        let errorMsg = 'Fehler bei der Beobachtung:\n';
+        
+        if (err.status === 0) {
+          errorMsg += '❌ Keine Verbindung zum Server möglich.\nPrüfe ob das Backend läuft.';
+        } else if (err.status === 401) {
+          errorMsg += '🔒 Nicht autorisiert - Bitte zuerst einloggen!';
+        } else if (err.status === 404) {
+          errorMsg += '🔍 Endpoint nicht gefunden.\nAktuell konfiguriert: /ai/infer\nVielleicht /ai/infer/mock probieren?';
+        } else if (err.status === 500) {
+          errorMsg += '⚠️ Server-Fehler.\nMöglicherweise Problem mit AI-Model-Verbindung.';
+        } else {
+          errorMsg += `Status ${err.status}: ${err.message}`;
+        }
+        
+        alert(errorMsg);
       }
     });
   }

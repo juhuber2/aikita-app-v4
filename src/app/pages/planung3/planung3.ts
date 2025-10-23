@@ -18,7 +18,7 @@ export class Planung3 {
   form!: FormGroup;
   editMode = false;
   selectedId: number | null = null;
-  group: GroupModel[] = [];
+  groups: GroupModel[] = [];
 
   ngOnInit(): void {
     this.loadKinder();

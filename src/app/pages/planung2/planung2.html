@@ -1,20 +1,22 @@
 <h1 class="text-center">Beobachtung</h1>
-<h4 class="text-center">Hier werden Beobachtungen zu den einzelnen Kindern angezeigt.</h4>
+<h4 class="text-center">Hier werden die Kinder angezeigt.</h4>
 
 <div class="container my-5">
   <div class="row" id="childrenAccordion">
-    @for (item of childrenList; track $index; let i = $index) {
+    @for (item of childrenList; track item.id; let i = $index) {
       <div class="col-md-6 col-lg-4 mb-4">
         <div class="card shadow rounded h-100">
           <div class="card-body position-relative">
-            <img class="small_picture position-absolute top-0 end-0 m-4" [src]="item.gender === 'w' ? '/girl.png' : '/boy.png'" alt="child"/>
+            <img class="small_picture position-absolute top-0 end-0 m-4" 
+                 [src]="getGenderImage(item.gender)" 
+                 alt="child"/>
             <h5 class="card-title fw-bold fs-2 text">{{ item.name }}</h5>
             <h6 class="card-subtitle mb-2 text-muted">
-              {{ item.gender }} • {{ item.age }} Jahre
+              {{ getGenderDisplay(item.gender) }} • {{ calculateAge(item.birthdate) }} Jahre
             </h6>
 
-            <p class="card-text"><strong>Beobachtung:</strong> {{ item.observation }}</p>
-            <p class="card-text"><strong>Aktivität:</strong> {{ item.activity }}</p>
+            <p class="card-text"><strong>Geburtsdatum:</strong> {{ item.birthdate | date:'dd.MM.yyyy' }}</p>
+            <p class="card-text"><strong>Gruppe ID:</strong> {{ item.groupId }}</p>
 
 
             <!-- Button für Collapse -->
@@ -32,10 +34,10 @@
                  [attr.id]="'details-' + i"
                  data-bs-parent="#childrenAccordion">
               <ul class="list-group list-group-flush">
-                <li class="list-group-item"><strong>Entwicklungsbereich:</strong> {{ item.area }}</li>
-                <li class="list-group-item"><strong>Teilbereich:</strong> {{ item.sub }}</li>
-                <li class="list-group-item"><strong>Unterbereich:</strong> {{ item.subsec }}</li>
-                <li class="list-group-item"><strong>Ziel:</strong> {{ item.goal }}</li>
+                <li class="list-group-item"><strong>ID:</strong> {{ item.id }}</li>
+                <li class="list-group-item"><strong>Name:</strong> {{ item.name }}</li>
+                <li class="list-group-item"><strong>Geschlecht:</strong> {{ item.gender }}</li>
+                <li class="list-group-item"><strong>Alter:</strong> {{ calculateAge(item.birthdate) }} Jahre</li>
               </ul>
             </div>
 

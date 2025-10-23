@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-login-main',
@@ -22,7 +23,7 @@ export class LoginMain {
 
  onLogin() {
   
-  const apiUrl = "https://aikitabewebapi-114119385008.europe-west1.run.app/api/accounts/login" //Änderung für Sarah's login
+  const apiUrl = `${environment.apiUrl}/api/accounts/login`;
 
   const formValue = this.loginForm.value;
     this.http.post(apiUrl, formValue).subscribe({

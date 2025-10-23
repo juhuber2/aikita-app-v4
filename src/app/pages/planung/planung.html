@@ -20,7 +20,7 @@
   </form>
 
   <!-- ANTWORT DER KI ALS FORMULAR -->
-  <div *ngIf="showSolution">
+  @if (showSolution) {
     <form [formGroup]="formTemp">
       <div class="card shadow-sm">
         <div class="card-header">KI-Antwort</div>
@@ -53,9 +53,9 @@
                 <input formControlName="area" type="text" class="form-control no-border" />
                 <select class="form-select" formControlName="area">
                   <option [ngValue]="null">-- Bereich wählen --</option>
-                  <option *ngFor="let a of areas" [ngValue]="a.id">
-                    {{ a.definition }}
-                  </option>
+                  @for (a of areas; track a.id) {
+                    <option [ngValue]="a.id">{{ a.definition }}</option>
+                  }
                 </select>
               </div>
 
@@ -65,9 +65,9 @@
                 <input formControlName="subarea" type="text" class="form-control no-border" />
                 <select class="form-select" formControlName="subarea">
                   <option [ngValue]="null">-- Teilbereich wählen --</option>
-                  <option *ngFor="let s of subareas" [ngValue]="s.id">
-                    {{ s.definition }}
-                  </option>
+                  @for (s of subareas; track s.id) {
+                    <option [ngValue]="s.id">{{ s.definition }}</option>
+                  }
                 </select>
               </div>
             </div>
@@ -79,9 +79,9 @@
                 <input formControlName="subsection" type="text" class="form-control no-border" />
                 <select class="form-select" formControlName="subsection">
                   <option [ngValue]="null">-- Unterbereich wählen --</option>
-                  <option *ngFor="let ss of subsections" [ngValue]="ss.id">
-                    {{ ss.definition }}
-                  </option>
+                  @for (ss of subsections; track ss.id) {
+                    <option [ngValue]="ss.id">{{ ss.definition }}</option>
+                  }
                 </select>
               </div>
 
@@ -114,5 +114,5 @@
         </div>
       </div>
     </form>
-  </div>
+  }
 </div>

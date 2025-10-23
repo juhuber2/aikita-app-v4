@@ -13,9 +13,11 @@
       formControlName="kindergarten"
       placeholder="Name des Kindergartens"
     />
-    <div class="error" *ngIf="settingsForm.get('kindergarten')?.invalid && settingsForm.get('kindergarten')?.touched">
-      <small>Bitte einen Kindergarten-Namen eingeben.</small>
-    </div>
+    @if (settingsForm.get('kindergarten')?.invalid && settingsForm.get('kindergarten')?.touched) {
+      <div class="error">
+        <small>Bitte einen Kindergarten-Namen eingeben.</small>
+      </div>
+    }
   </div>
 
   <!-- Anzahl Kinder -->
@@ -28,9 +30,11 @@
       min="0"
       placeholder="z. B. 23"
     />
-    <div class="error" *ngIf="settingsForm.get('numberChildren')?.invalid && settingsForm.get('numberChildren')?.touched">
-      <small>Bitte eine gültige Zahl ≥ 0 eingeben.</small>
-    </div>
+    @if (settingsForm.get('numberChildren')?.invalid && settingsForm.get('numberChildren')?.touched) {
+      <div class="error">
+        <small>Bitte eine gültige Zahl ≥ 0 eingeben.</small>
+      </div>
+    }
   </div>
 
   <!-- Anzahl Betreuer -->
@@ -43,9 +47,11 @@
       min="0"
       placeholder="z. B. 4"
     />
-    <div class="error" *ngIf="settingsForm.get('numberBetreuer')?.invalid && settingsForm.get('numberBetreuer')?.touched">
-      <small>Bitte eine gültige Zahl ≥ 0 eingeben.</small>
-    </div>
+    @if (settingsForm.get('numberBetreuer')?.invalid && settingsForm.get('numberBetreuer')?.touched) {
+      <div class="error">
+        <small>Bitte eine gültige Zahl ≥ 0 eingeben.</small>
+      </div>
+    }
   </div>
 
   <!-- Speichern-Button -->

@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  aikita-frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - BACKEND_URL=https://aikitabewebapi-114119385008.europe-west1.run.app
+    ports:
+      - "80:80"
+    environment:
+      - BACKEND_URL=https://aikitabewebapi-114119385008.europe-west1.run.app
+    container_name: aikita-frontend
+    restart: unless-stopped

@@ -57,9 +57,9 @@
           <label for="gruppe" class="form-label fw-bold">Gruppe</label>
           <select id="gruppe" formControlName="gruppe" class="form-select">
             <option value="">Bitte wählen</option>
-            <option *ngFor="let g of groups" [ngValue]="g.id">
-                    {{ g.definition }}
-                  </option>
+            @for (g of groups; track g.id) {
+              <option [ngValue]="g.id">{{ g.name }}</option>
+            }
           </select>
         </div>
 
