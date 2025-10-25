@@ -4,3 +4,32 @@
   color: #198754;
   font-size: 4rem;
 }
+
+.page-title {
+  margin-top: 2rem;
+  font-family: "KGSecondChancesSketch";
+  color: #198754;
+  font-size: 4rem;
+}
+
+/* Karten-Hover: leichtes Heben */
+.card-hover {
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+}
+
+/* Icon-Hover: leichtes Aufleuchten & vergrößern */
+.icon-hover {
+  font-size: 3rem; /* vergrößert */
+  color: #007bff;
+  transition: transform 0.3s, color 0.3s;
+}
+
+.icon-hover:hover {
+  transform: scale(1.2);
+  color: #0056b3;
+}

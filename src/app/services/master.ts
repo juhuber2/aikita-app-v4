@@ -23,9 +23,6 @@ export class Master {
 
   // Child-Endpoints
   private childrenUrl = `${this.baseUrl}/childs`;
-  
-  // Falls ChildGroup noch Mock API nutzt (kann später auch umgestellt werden)
-  private childGroupUrl = 'https://68c3eac481ff90c8e61a9272.mockapi.io/aikita/childGroup';
 
   constructor(private http: HttpClient) {
     // Debug: Zeige die konfigurierten URLs
@@ -102,7 +99,7 @@ export class Master {
 
   //Kinderliste
   getKinder(): Observable<ChildGroup[]> {
-    return this.http.get<ChildGroup[]>(this.childGroupUrl);
+    return this.http.get<ChildGroup[]>(this.childrenUrl);
   }
 
   getKinderNachGruppe(id: number): Observable<ChildGroup[]> {
@@ -110,19 +107,19 @@ export class Master {
   }
 
   getKindById(id: number): Observable<ChildGroup> {
-    return this.http.get<ChildGroup>(`${this.childGroupUrl}/${id}`);
+    return this.http.get<ChildGroup>(`${this.childrenUrl}/${id}`);
   }
 
   addKind(kind: ChildGroup): Observable<ChildGroup> {
-    return this.http.post<ChildGroup>(this.childGroupUrl, kind);
+    return this.http.post<ChildGroup>(this.childrenUrl, kind);
   }
 
   updateKind(kind: ChildGroup): Observable<ChildGroup> {
-    return this.http.put<ChildGroup>(`${this.childGroupUrl}/${kind.id}`, kind);
+    return this.http.put<ChildGroup>(`${this.childrenUrl}/${kind.id}`, kind);
   }
 
   deleteKind(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.childGroupUrl}/${id}`);
+    return this.http.delete<void>(`${this.childrenUrl}/${id}`);
   }
 
 

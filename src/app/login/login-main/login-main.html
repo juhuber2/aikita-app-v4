@@ -1,20 +1,26 @@
-<div class="container mb-5 d-flex justify-content-center align-items-center" style="min-height: 100vh;">
-  <div class="floating-bg"></div>
-    <div class="login-wrapper">
-      <div class="login-card">
-        <h3>Login</h3>
-        <form [formGroup]="loginForm">
-          <div class="mb-3">
-            <input type="email" formControlName="Email" class="form-control" placeholder="Email" required>
-          </div>
-          <div class="mb-3">
-            <input type="password" formControlName="Password" class="form-control" placeholder="Password" required>
-          </div>
-          <div class="d-grid">
-            <button type="submit" (click)="onLogin()" class="btn btn-primary btn-login">Sign In</button>
-          </div>
-          <p class="text-center mt-3 text-light">Bei Fragen helfen wir gerne.</p>
-        </form>
-      </div>
+<div class="login-page d-flex justify-content-center align-items-center vh-100">
+
+  <div class="login-container">
+    <!-- Linke Seite -->
+    <div class="left text-center">
+       <img class="logo" src="aikita_logo.png" width="400" alt="aikita">
+    </div>
+
+    <!-- Rechte Seite -->
+    <div class="right">
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+        <h2 class="text-center mb-3">Login</h2>
+
+        <label for="email">E-Mail:</label>
+        <input id="email" type="email" formControlName="Email" placeholder="Deine E-Mail" required />
+
+        <label for="password">Passwort:</label>
+        <input id="password" type="password" formControlName="Password" placeholder="••••••••" required />
+
+        <button type="submit">Einloggen</button>
+
+        <p class="text-center mt-3 text-muted small">Bei Fragen helfen wir gerne.</p>
+      </form>
+    </div>
   </div>
 </div>

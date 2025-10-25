@@ -3,10 +3,11 @@ import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import { NgClass, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-login-main',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgClass, NgIf],
   templateUrl: './login-main.html',
   styleUrl: './login-main.css'
 })
@@ -21,6 +22,15 @@ export class LoginMain {
   http = inject(HttpClient);
   router = inject(Router);
 
+  showLogo = false;
+  alertMessage: string = '';
+  alertType: 'success' | 'danger' = 'success'; 
+
+  
+  ngOnInit() {
+  setTimeout(() => this.showLogo = true, 100);
+  }
+
  onLogin() {
   
   const apiUrl = `${environment.apiUrl}/api/accounts/login`;
@@ -30,7 +40,8 @@ export class LoginMain {
       next:(response:any) => { //Antwort vom Backend als JSON
         debugger;
           if (response.sessionToken) { //Änderung für Sarah's login
-            alert("Login sucess");
+            this.alertMessage = 'Login erfolgreich!';
+            this.alertType = 'success';
             sessionStorage.setItem('angularToken', response.sessionToken) //Änderung für Sarah's login
             this.router.navigateByUrl("/dashboard")
           }
@@ -40,7 +51,8 @@ export class LoginMain {
       },
       error:(error) => {
         debugger;
-        alert(error.message)
+        this.alertMessage = 'Ein Fehler ist aufgetreten: ' + error.message;
+        this.alertType = 'danger';
       }
     })
   }

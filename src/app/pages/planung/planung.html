@@ -1,23 +1,21 @@
 <div class="container mt-4">
-  <h2 class="text-center mb-4">🤖 Frag die KI</h2>
+  <h2 class="text-center mb-4 page-title">Beobachtung</h2>
 
   <!-- EINGABEFORMULAR -->
+  @if (!showSolution) {
   <form [formGroup]="form" (ngSubmit)="createAnswer()">
-    <div class="card shadow-sm mb-3">
-      <div class="card-header bg-success text-white">Neue Beobachtung</div>
-      <div class="card-body">
+    <div class="p-3 mb-3">
         <div class="mb-3">
-          <label class="form-label fw-bold">Beobachtung</label>
-          <textarea formControlName="observation" class="form-control" rows="3"></textarea>
+          <textarea formControlName="observation" class="form-control" rows="3" placeholder="Geben Sie bitte Ihre Beobachtung zu einem Kind ein."></textarea>
         </div>
         <div class="mb-3">
           <label class="form-label fw-bold">Alter</label>
           <input formControlName="age" type="number" class="form-control" />
         </div>
         <button type="submit" class="btn btn-primary">Antwort erstellen</button>
-      </div>
     </div>
   </form>
+  }
 
   <!-- ANTWORT DER KI ALS FORMULAR -->
   @if (showSolution) {
@@ -26,22 +24,14 @@
         <div class="card-header">KI-Antwort</div>
         <div class="card-body">
 
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <label class="form-label fw-bold">Result ID</label>
-              <input formControlName="resultId" type="text" class="form-control" readonly />
-            </div>
-
-            <div class="col-md-6 mb-3">
-              <label class="form-label fw-bold">Result Token</label>
-              <input formControlName="resultToken" type="text" class="form-control" readonly />
+          <div class="row justify-content-center">
+            <div class="col-md-8 mb-4">
+              <label class="form-label fw-bold">Aktivität</label>
+              <textarea formControlName="activity" type="text" class="form-control mx-auto" rows="3"></textarea>
             </div>
           </div>
 
-          <div class="mb-3">
-            <label class="form-label fw-bold">Ablaufdatum</label>
-            <input formControlName="expiresAt" type="text" class="form-control" readonly />
-          </div>
+
 
           <hr />
 
@@ -109,10 +99,11 @@
 
           <div class="mt-3 d-flex justify-content-end">
             <button type="button" class="btn btn-success me-2" (click)="saveSuggestion()">Speichern</button>
-            <button type="button" class="btn btn-outline-secondary" (click)="formTemp.reset()">Zurücksetzen</button>
+            <button type="button" class="btn btn-outline-secondary me-2" (click)="formTemp.reset()">Zurücksetzen</button>
+            <button type="button" class="btn btn-outline-secondary" (click)="showSolution = false"> Neue Anfrage </button>
           </div>
         </div>
       </div>
     </form>
-  }
+  } 
 </div>

@@ -9,22 +9,28 @@
   <div class="w-50">
       <form [formGroup]="form" (ngSubmit)="onSubmit()" class="mb-3">
       <div class="row mb-3">
-          <!-- Alter -->
+          <!-- Name -->
           <div class="col-md-7">
             <label for="name" class="form-label fw-bold">Name</label>
             <input id="name" formControlName="name" class="form-control" />
           </div>
 
-          <!-- Alter -->
+          <!-- Geburtstag -->
           <div class="col-md-2">
-            <label for="alter" class="form-label fw-bold">Alter</label>
-            <input id="alter" type="number" formControlName="alter" class="form-control" />
+            <label for="birthdate" class="form-label fw-bold">Geburtstag</label>
+            <input id="birthdate" formControlName="birthdate" class="form-control" />
+          </div>
+
+            <!-- Gernder -->
+          <div class="col-md-2">
+            <label for="gender" class="form-label fw-bold">Geschalecht</label>
+            <input id="gender" formControlName="gender" class="form-control" />
           </div>
 
           <!-- Gruppe -->
           <div class="col-md-3">
-            <label for="gruppe" class="form-label fw-bold">Gruppe</label>
-            <select id="gruppe" formControlName="gruppe" class="form-select">
+            <label for="groupId" class="form-label fw-bold">Gruppe</label>
+            <select id="groupId" formControlName="groupId" class="form-select">
               <option value="">Bitte wählen</option>
               <option value="Löwen">Löwen</option>
               <option value="Tiger">Tiger</option>

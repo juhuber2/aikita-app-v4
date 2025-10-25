@@ -1,21 +1,54 @@
 <!-- Oberer Abstand durch Padding auf main container -->
-<div class="container pt-5">
+<div class="container pt-3">
   
-  <!-- Willkommen-Text zentriert -->
   <div class="text-center mb-4">
-    <h1 class="text-center page-title">Willkommen bei</h1>
+    <h1 class="text-center page-title">Bitte auswählen:</h1>
   </div>
-
-  <!-- Bild horizontal & vertikal zentriert -->
-  <div class="d-flex justify-content-center align-items-center mb-4" style="min-height: 300px;">
-    <img class="img-fluid" src="aikita_logo.png" alt="Aikita Logo" style="max-height: 250px;">
-  </div>
-
-  <!-- Untertitel zentriert -->
-  <div class="text-center">
-    <p class="lead fst-italic">Smart geplant. Pädagogisch gedacht.</p>
-  </div>
-
 </div>
 
+<div class="container py-3">
+  <div class="row justify-content-center">
 
+    <!-- Aktivitäten-Karte -->
+
+
+    <div class="col-md-4 mb-4">
+      <div class="card text-center h-100 shadow p-3 bg-body-tertiary card-hover">
+        <i class="bi bi-magic fs-1 icon-hover"></i>
+        <div class="card-body">
+          <h5 class="card-title fs-1">Aktivitäten</h5>
+          <p class="card-text text-secondary fs-5">Lehnen Sie sich zurück und lassen Sie unsere KI für sich arbeiten.</p>
+          <a routerLink="/planung" class="btn btn-primary">Mehr</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Beobachtungen-Karte -->
+    <div class="col-md-4 mb-4">
+      <div class="card text-center h-100 shadow p-3 bg-body-tertiary card-hover">
+        <i class="bi bi-binoculars fs-1 icon-hover"></i>
+        <div class="card-body">
+          <h5 class="card-title fs-1">Beobachtungen</h5>
+          <p class="card-text text-secondary fs-5">
+            Nehmen Sie Einblick über gespeicherte Aktivitäten für jedes Kind.
+          </p>
+          <a routerLink="/planung2" class="btn btn-primary">Mehr</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Kinderliste-Karte -->
+    <div class="col-md-4 mb-4">
+      <div class="card text-center h-100 shadow p-3 bg-body-tertiary card-hover">
+        <i class="bi bi-list-ol fs-1 icon-hover"></i>
+        <div class="card-body">
+          <h5 class="card-title fs-1">Kinderliste</h5>
+          <p class="card-text text-secondary fs-5">
+            Eine Auflistung aller Kinder und deren Gruppenzugehörigkeit.
+          </p>
+          <a routerLink="/planung3" class="btn btn-primary">Mehr</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

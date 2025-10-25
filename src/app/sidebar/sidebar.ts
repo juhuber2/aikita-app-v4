@@ -20,7 +20,7 @@ export class Sidebar {
   constructor(private s: Master) {}
 
    ngOnInit(): void {
-    // 👇 Jetzt "abonniert" sich die Sidebar auf Änderungen im Service
+    // Jetzt "abonniert" sich die Sidebar auf Änderungen im Service
     this.s.settings$.subscribe((current: Settings) => {
       this.kindergarten = current.kindergarten;
       this.numberChildren = current.numberChildren;

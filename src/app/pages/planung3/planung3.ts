@@ -24,9 +24,11 @@ export class Planung3 {
     this.loadKinder();
 
     this.form = this.fb.group({
+      id: [''],
       name: ['', [Validators.required, Validators.minLength(2)]],
-      alter: [0, [Validators.required, Validators.min(1)]],
-      gruppe: ['', Validators.required]
+      birthdate: ['' ],
+      gender: [''],
+      groupId: ['']
     });
   }
 
@@ -61,9 +63,6 @@ export class Planung3 {
   getChildGroup(id: number): void {
      this.kinderService.getKinderNachGruppe(id).subscribe(data => this.kinder = data);
   }
-
-
-
 
   //Bearbeiten starten
   editKind(kind: ChildGroup): void {

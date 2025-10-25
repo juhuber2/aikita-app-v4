@@ -1,6 +1,6 @@
 //Interface für die Beobachtung
 export interface ObservationModel {
-	id: number;  // Geändert von childID zu id
+	id: number;
 	age: number;
 	observation: string;
 	resultId?: number,

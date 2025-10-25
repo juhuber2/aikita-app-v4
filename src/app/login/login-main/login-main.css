@@ -1,42 +1,130 @@
-    .login-container {
-      display: flex;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      border-radius: 15px;
-      overflow: hidden;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-      animation: fadeIn 1s ease-in-out;
-    }
+/* === Grundlayout === */
+.login-page {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: linear-gradient(135deg, #007bff, #00c6ff);
+  animation: fadeIn 1.2s ease-in-out;
+}
 
-    .login-card {
-      padding: 40px;
-      width: 350px;
-    }
+/* === Container für zwei Spalten === */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 100px;
+  width: 100%;
+  max-width: 700px;
+  padding: 20px;
+  animation: slideUp 1.5s ease-in-out;
+}
 
-    .login-card h3 {
-      text-align: center;
-      color: #fff;
-      margin-bottom: 25px;
-    }
+/* === Linke Seite === */
+.left {
+  flex: 1;
+  text-align: center;
+  font-size: 3rem;
+  color: white;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+}
 
-    .form-control {
-      background-color: rgba(255,255,255,0.2);
-      border: none;
-      color: #fff;
-    }
+/* === Rechte Seite (Formular) === */
+.right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
 
-    .form-control::placeholder {
-      color: #eee;
-    }
+form {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  max-width: 70%;
+  gap: 12px;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(5px);
+}
 
-    .btn-login {
-      background: #667eea;
-      border: none;
-      transition: transform 0.2s;
-    }
+form h2 {
+  color: #333;
+  margin-bottom: 10px;
+}
 
-    .btn-login:hover {
-      background: #556cd6;
-      transform: scale(1.05);
-    }
-    
+input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+input:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+button {
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+/* === Animationen === */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+  .login-container {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .left {
+    font-size: 2.2rem;
+  }
+
+  form {
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 480px) {
+  .left {
+    font-size: 1.8rem;
+  }
+
+  form {
+    padding: 20px;
+  }
+
+  button {
+    font-size: 0.9rem;
+  }
+}
