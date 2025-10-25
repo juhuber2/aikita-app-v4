@@ -98,24 +98,20 @@ export class Master {
   }
 
   //Kinderliste
-  getKinder(): Observable<ChildGroup[]> {
-    return this.http.get<ChildGroup[]>(this.childrenUrl);
+  getKinder(): Observable<Child[]> {
+    return this.http.get<Child[]>(this.childrenUrl);
   }
 
-  getKinderNachGruppe(id: number): Observable<ChildGroup[]> {
-    return this.http.get<ChildGroup[]>(`${this.baseUrl}/groups/${id}`);
+  getKindById(id: number): Observable<Child> {
+    return this.http.get<Child>(`${this.childrenUrl}/${id}`);
   }
 
-  getKindById(id: number): Observable<ChildGroup> {
-    return this.http.get<ChildGroup>(`${this.childrenUrl}/${id}`);
+  addKind(kind: Child): Observable<Child> {
+    return this.http.post<Child>(this.childrenUrl, kind);
   }
 
-  addKind(kind: ChildGroup): Observable<ChildGroup> {
-    return this.http.post<ChildGroup>(this.childrenUrl, kind);
-  }
-
-  updateKind(kind: ChildGroup): Observable<ChildGroup> {
-    return this.http.put<ChildGroup>(`${this.childrenUrl}/${kind.id}`, kind);
+  updateKind(kind: Child): Observable<Child> {
+    return this.http.put<Child>(`${this.childrenUrl}/${kind.id}`, kind);
   }
 
   deleteKind(id: number): Observable<void> {

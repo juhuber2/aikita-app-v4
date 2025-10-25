@@ -1,12 +1,13 @@
 <div class="container mt-4">
-  <h2 class="text-center mb-4 page-title">Beobachtung</h2>
+  <h2 class="text-center mb-4 page-title">Aktivitäten</h2>
 
   <!-- EINGABEFORMULAR -->
   @if (!showSolution) {
   <form [formGroup]="form" (ngSubmit)="createAnswer()">
     <div class="p-3 mb-3">
         <div class="mb-3">
-          <textarea formControlName="observation" class="form-control" rows="3" placeholder="Geben Sie bitte Ihre Beobachtung zu einem Kind ein."></textarea>
+          <textarea formControlName="observation" class="form-control" rows="3"
+          placeholder="Geben Sie bitte Ihre Beobachtung zu einem Kind ein und Sie erhalten dazu Vorschläge zur Einordnung des Verhaltens."></textarea>
         </div>
         <div class="mb-3">
           <label class="form-label fw-bold">Alter</label>
@@ -30,8 +31,6 @@
               <textarea formControlName="activity" type="text" class="form-control mx-auto" rows="3"></textarea>
             </div>
           </div>
-
-
 
           <hr />
 

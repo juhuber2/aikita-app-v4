@@ -1,12 +1,14 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject,  } from '@angular/core';
 import { FormsModule, FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { ChildGroup } from '../../models/child-group';
+import { Child } from '../../models/child';
 import { GroupModel } from '../../models/child-group';
 import { Master } from '../../services/master';
+import { DatePipe } from '@angular/common';
+import { signal } from '@angular/core'; //Versuch mit Signals
 
 @Component({
   selector: 'app-planung3',
-  imports: [FormsModule, ReactiveFormsModule],
+  imports: [FormsModule, ReactiveFormsModule, DatePipe],
   templateUrl: './planung3.html',
   styleUrl: './planung3.css'
 })
@@ -14,7 +16,8 @@ export class Planung3 {
   private fb = inject(FormBuilder);
   private kinderService = inject(Master);
 
-  kinder: ChildGroup[] = [];
+  //kinder: Child[] = []; //ChildGroup[] = [];
+  kinder = signal<Child[]> ([]);
   form!: FormGroup;
   editMode = false;
   selectedId: number | null = null;
@@ -28,20 +31,21 @@ export class Planung3 {
       name: ['', [Validators.required, Validators.minLength(2)]],
       birthdate: ['' ],
       gender: [''],
-      groupId: ['']
+      groupId: [''],
+      filterGroupId: ['']
     });
   }
 
   //alle Kinder laden
   loadKinder(): void {
-    this.kinderService.getKinder().subscribe(data => this.kinder = data);
+    this.kinderService.getKinder().subscribe(data => this.kinder.set(data));
   }
 
   //Formular absenden (neu oder update)
   onSubmit(): void {
     if (this.form.invalid) return;
 
-    const kind: ChildGroup = {
+    const kind: Child = {
       id: this.selectedId ?? 0,
       ...this.form.value
     };
@@ -60,12 +64,28 @@ export class Planung3 {
   }
 
   //Nach Gruppe filtern
-  getChildGroup(id: number): void {
-     this.kinderService.getKinderNachGruppe(id).subscribe(data => this.kinder = data);
+  loadKinderNachGruppe(): void {
+  const groupIdValue = this.form.get('filterGroupId')?.value;
+
+  if (!groupIdValue) {
+    alert('Bitte zuerst eine Gruppe auswählen!');
+    return;
   }
 
+  const groupId = Number(groupIdValue); // <--- Hier sicherstellen, dass es eine Zahl ist
+
+  this.kinderService.getChildrenByGroupId(groupId).subscribe({
+    next: data => {
+      console.log('Ergebnis:', data);
+      this.kinder.set(data);
+    },
+    error: err => console.error('Fehler:', err)
+  });
+}
+
+
   //Bearbeiten starten
-  editKind(kind: ChildGroup): void {
+  editKind(kind: Child): void {
     this.editMode = true;
     this.selectedId = kind.id;
     this.form.patchValue(kind);

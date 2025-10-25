@@ -6,7 +6,8 @@ export interface Child {
 	groupId: number;
 }
 
-// Alte Interface für Abwärtskompatibilität (falls noch verwendet)
+/*
+Alte Interface für Abwärtskompatibilität (falls noch verwendet)
 export interface ChildLegacy {
 	id: string,
     childID: string;
@@ -24,3 +25,4 @@ export interface ChildLegacy {
 	promptV: string;
 	expires: string
 }
+*/
