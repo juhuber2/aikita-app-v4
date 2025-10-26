@@ -57,3 +57,11 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+## Status
+
+### 26.10.2025
+- Login page update with design improvements
+- Dashboard updated
+- Observation: Icon added, ChildList added, selecting chaild name and sending id to backend
+- ChildList update, delete works 
