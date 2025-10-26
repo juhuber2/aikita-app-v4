@@ -12,13 +12,8 @@
                  alt="child"/>
             <h5 class="card-title fw-bold fs-2 text">{{ item.name }}</h5>
             <h6 class="card-subtitle mb-2 text-muted">
-              {{ getGenderDisplay(item.gender) }} • {{ calculateAge(item.birthdate) }} Jahre
+              {{ getGenderDisplay(item.gender) }} • {{ calculateAge(item.birthdate) }} Jahre • {{ item.groupId }}
             </h6>
-
-            <p class="card-text"><strong>Geburtsdatum:</strong> {{ item.birthdate | date:'dd.MM.yyyy' }}</p>
-            <p class="card-text"><strong>Gruppe ID:</strong> {{ item.groupId }}</p>
-
-
             <!-- Button für Collapse -->
             <button class="btn btn-sm btn-outline-primary mt-2"
                     type="button"
@@ -35,9 +30,7 @@
                  data-bs-parent="#childrenAccordion">
               <ul class="list-group list-group-flush">
                 <li class="list-group-item"><strong>ID:</strong> {{ item.id }}</li>
-                <li class="list-group-item"><strong>Name:</strong> {{ item.name }}</li>
-                <li class="list-group-item"><strong>Geschlecht:</strong> {{ item.gender }}</li>
-                <li class="list-group-item"><strong>Alter:</strong> {{ calculateAge(item.birthdate) }} Jahre</li>
+
               </ul>
             </div>
 

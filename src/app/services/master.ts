@@ -24,6 +24,9 @@ export class Master {
   // Child-Endpoints
   private childrenUrl = `${this.baseUrl}/childs`;
 
+  // ChildGroup-Endpoints
+  private childrenGroupUrl = `${this.baseUrl}/childs/bygroup`;
+
   constructor(private http: HttpClient) {
     // Debug: Zeige die konfigurierten URLs
     console.log('🔧 Master Service initialized');
@@ -94,7 +97,7 @@ export class Master {
 
   // Kinder nach Gruppe filtern
   getChildrenByGroupId(groupId: number): Observable<Child[]> {
-    return this.http.get<Child[]>(`${this.childrenUrl}?groupId=${groupId}`);
+    return this.http.get<Child[]>(`${this.childrenGroupUrl}/${groupId}`);
   }
 
   //Kinderliste
