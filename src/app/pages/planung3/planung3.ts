@@ -12,7 +12,7 @@ import { signal } from '@angular/core'; //Versuch mit Signals
   templateUrl: './planung3.html',
   styleUrl: './planung3.css'
 })
-export class Planung3 {
+export class Planung3 implements OnInit {
   private fb = inject(FormBuilder);
   private kinderService = inject(Master);
 

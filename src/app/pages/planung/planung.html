@@ -3,19 +3,62 @@
 
   <!-- EINGABEFORMULAR -->
   @if (!showSolution) {
-  <form [formGroup]="form" (ngSubmit)="createAnswer()">
-    <div class="p-3 mb-3">
-        <div class="mb-3">
-          <textarea formControlName="observation" class="form-control" rows="3"
-          placeholder="Geben Sie bitte Ihre Beobachtung zu einem Kind ein und Sie erhalten dazu Vorschläge zur Einordnung des Verhaltens."></textarea>
+    <form [formGroup]="form" (ngSubmit)="createAnswer()">
+      <div class="p-3 mb-3">
+        <div class="mb-3 position-relative">
+          <textarea
+            formControlName="observation"
+            class="form-control pe-5"
+            rows="3"
+            placeholder="Geben Sie bitte Ihre Beobachtung zu einem Kind ein und Sie erhalten dazu Vorschläge zur Einordnung des Verhaltens.">
+          </textarea>
+
+          <button
+            type="submit"
+            class="btn btn-primary position-absolute send-btn"
+            [disabled]="form.get('observation')?.value.trim().length === 0">
+            <i class="bi bi-magic"></i>
+          </button>
         </div>
+
+        
         <div class="mb-3">
           <label class="form-label fw-bold">Alter</label>
           <input formControlName="age" type="number" class="form-control" />
         </div>
-        <button type="submit" class="btn btn-primary">Antwort erstellen</button>
-    </div>
-  </form>
+      
+
+            <div class="container my-5">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>Name</th>
+                      <th>Alter</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @for (kind of kinder(); track kind.id) {
+                      <tr>
+                        <!-- Radio -->
+                        <td>
+                          <input
+                            type="radio"
+                            formControlName="childId"
+                            [value]="kind.id"
+                            id="kindRadio{{kind.id}}" />
+                        </td>
+
+                        <!-- Name -->
+                        <td> <label for="kindRadio{{kind.id}}">{{ kind.name }}</label> </td>
+                        <td> <label for="kindRadio{{kind.id}}">{{ kind.birthdate }}</label></td>
+                      </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+      </div>
+    </form>
   }
 
   <!-- ANTWORT DER KI ALS FORMULAR -->

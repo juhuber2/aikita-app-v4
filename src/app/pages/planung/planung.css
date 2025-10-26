@@ -13,10 +13,51 @@
 }
 
 .card-header {
-    background: linear-gradient(135deg, #007bff, #00c6ff);
+  background: linear-gradient(135deg, #007bff, #00c6ff);
 }
 
 .p-3.mb-3{
   max-width: 50%;
   margin: 0 auto; /* zentriert  */
+}
+
+.position-relative {
+  position: relative;
+}
+
+.send-btn {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  line-height: 1;
+  padding: 8px 10px;
+  background-color: #ccc;        /* Standard: grau */
+  border: none;
+  color: white;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Wenn deaktiviert → grau */
+.send-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  transform: scale(1);
+}
+
+/* Wenn aktiv → blau + leicht größer */
+.send-btn:not(:disabled) {
+  background: linear-gradient(135deg, #007bff, #00c6ff);
+  cursor: pointer;
+  transform: scale(1.05);
+}
+
+/* Schöner Hover-Effekt */
+.send-btn:not(:disabled):hover {
+  background-color: #0b5ed7;
+  transform: scale(1.1);
+}
+
+/* Platz im Textfeld, damit Button nicht überlappt */
+textarea.form-control {
+  padding-right: 50px;
 }

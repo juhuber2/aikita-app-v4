@@ -1,7 +1,9 @@
 
 import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { signal } from '@angular/core';
 import { Master } from '../../services/master';
+import { Child } from '../../models/child';
 import {
   AreaModel,
   SubAreaModel,
@@ -19,6 +21,9 @@ import {
   styleUrl: './planung.css'
 })
 export class Planung implements OnInit {
+  kinder = signal<Child[]> ([]);
+  private kinderService = inject(Master);
+
   form!: FormGroup;
   formTemp!: FormGroup;
   showSolution = false;
@@ -39,8 +44,8 @@ export class Planung implements OnInit {
   ngOnInit(): void {
     // --- Eingabeformular (wird gessendet) ---
     this.form = this.fb.group({
-      childId: [1],
-      age: [null],
+      childId: [null, Validators.required], 
+      age: [null, ],
       observation: ['']
     });
 
@@ -80,7 +85,13 @@ export class Planung implements OnInit {
         this.subsections = this.subsectionsAll.filter(s => s.subAreaId === subId);
         previewGroup.patchValue({ subsection: null });
       });
-    }
+
+      //alle Kinder laden + Altersberechnung:
+      this.kinderService.getKinder().subscribe(data => this.kinder.set(data));
+  }
+
+
+    
 
      // Lade alle Listen vom Backend
   loadData() {
@@ -116,18 +127,18 @@ export class Planung implements OnInit {
       observation: formValue.observation || 'Keine Beobachtung angegeben'
     };
 
-    console.log('📤 Sende Beobachtung:', fullData);
+    console.log('Sende Beobachtung:', fullData);
 
     this.masterService.addObservation(fullData).subscribe({
       next: (response) => {
-        console.log('✅ Antwort vom Server:', response);
+        console.log('Antwort vom Server:', response);
 
-         // 🔹 1. Textnamen aus Response holen
+         // 1. Textnamen aus Response holen
         const areaName = response.preview;
         const subareaName = response.preview;
         const subsectionName = response.preview;
 
-        // 🔹 2. IDs aus Listen suchen
+        // 2. IDs aus Listen suchen
         const areaId = this.areasAll.find(a => a.definition === areaName)?.id ?? null;
         const subareaId = this.subareasAll.find(s => s.definition === subareaName)?.id ?? null;
         const subsectionId = this.subsectionsAll.find(s => s.definition === subsectionName)?.id ?? null;
@@ -140,10 +151,10 @@ export class Planung implements OnInit {
           preview: response.preview
         });
 
-        alert('✅ Beobachtung erfolgreich gesendet!');
+        alert('Beobachtung erfolgreich gesendet!');
       },
       error: (err) => {
-        console.error('❌ Fehler bei Beobachtung:', err);
+        console.error('Fehler bei Beobachtung:', err);
         console.error('Status:', err.status);
         console.error('Message:', err.message);
         console.error('Error Object:', err.error);
@@ -151,13 +162,13 @@ export class Planung implements OnInit {
         let errorMsg = 'Fehler bei der Beobachtung:\n';
         
         if (err.status === 0) {
-          errorMsg += '❌ Keine Verbindung zum Server möglich.\nPrüfe ob das Backend läuft.';
+          errorMsg += 'Keine Verbindung zum Server möglich.\nPrüfe ob das Backend läuft.';
         } else if (err.status === 401) {
-          errorMsg += '🔒 Nicht autorisiert - Bitte zuerst einloggen!';
+          errorMsg += 'Nicht autorisiert - Bitte zuerst einloggen!';
         } else if (err.status === 404) {
-          errorMsg += '🔍 Endpoint nicht gefunden.\nAktuell konfiguriert: /ai/infer\nVielleicht /ai/infer/mock probieren?';
+          errorMsg += 'Endpoint nicht gefunden.\nAktuell konfiguriert: /ai/infer\nVielleicht /ai/infer/mock probieren?';
         } else if (err.status === 500) {
-          errorMsg += '⚠️ Server-Fehler.\nMöglicherweise Problem mit AI-Model-Verbindung.';
+          errorMsg += 'Server-Fehler.\nMöglicherweise Problem mit AI-Model-Verbindung.';
         } else {
           errorMsg += `Status ${err.status}: ${err.message}`;
         }
