@@ -43,8 +43,18 @@ export class LoginMain {
           if (response.sessionToken) { //Änderung für Sarah's login
             this.alertMessage = 'Login erfolgreich!';
             this.alertType = 'success';
+
+            /*
             sessionStorage.setItem('angularToken', response.sessionToken) //Änderung für Sarah's login
             this.router.navigateByUrl("/dashboard")
+            */
+
+            sessionStorage.setItem('angularToken', response.sessionToken); // Token speichern
+            // 🔧 Kleine Pause, damit Edge den Token sicher speichert
+            setTimeout(() => {
+              this.router.navigateByUrl("/dashboard");
+            }, 50);
+
           }
           else {
             alert("Login failed — kein Token erhalten")
