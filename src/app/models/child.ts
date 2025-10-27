@@ -2,6 +2,7 @@ export interface Child {
 	id: number;
 	name: string;
 	birthdate: string;
+	img: string;
 	gender: string;
 	groupId: number;
 }

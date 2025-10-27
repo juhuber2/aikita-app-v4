@@ -31,6 +31,7 @@ export class Planung3 implements OnInit {
       name: ['', [Validators.required, Validators.minLength(2)]],
       birthdate: ['' ],
       gender: [''],
+      img: [''],
       groupId: [''],
       filterGroupId: ['']
     });

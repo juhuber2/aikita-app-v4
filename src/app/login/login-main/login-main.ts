@@ -38,7 +38,8 @@ export class LoginMain {
   const formValue = this.loginForm.value;
     this.http.post(apiUrl, formValue).subscribe({
       next:(response:any) => { //Antwort vom Backend als JSON
-        debugger;
+        console.log("Response vom Server:", response);
+        //debugger;
           if (response.sessionToken) { //Änderung für Sarah's login
             this.alertMessage = 'Login erfolgreich!';
             this.alertType = 'success';
