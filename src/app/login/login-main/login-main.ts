@@ -38,30 +38,19 @@ export class LoginMain {
   const formValue = this.loginForm.value;
     this.http.post(apiUrl, formValue).subscribe({
       next:(response:any) => { //Antwort vom Backend als JSON
-        console.log("Response vom Server:", response);
-        //debugger;
+        debugger;
           if (response.sessionToken) { //Änderung für Sarah's login
             this.alertMessage = 'Login erfolgreich!';
             this.alertType = 'success';
-
-            /*
             sessionStorage.setItem('angularToken', response.sessionToken) //Änderung für Sarah's login
             this.router.navigateByUrl("/dashboard")
-            */
-
-            sessionStorage.setItem('angularToken', response.sessionToken); // Token speichern
-            // 🔧 Kleine Pause, damit Edge den Token sicher speichert
-            setTimeout(() => {
-              this.router.navigateByUrl("/dashboard");
-            }, 50);
-
           }
           else {
             alert("Login failed — kein Token erhalten")
           }
       },
       error:(error) => {
-        //debugger;
+        debugger;
         this.alertMessage = 'Ein Fehler ist aufgetreten: ' + error.message;
         this.alertType = 'danger';
       }
