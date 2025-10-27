@@ -51,7 +51,7 @@ export class LoginMain {
           }
       },
       error:(error) => {
-        debugger;
+        //debugger;
         this.alertMessage = 'Ein Fehler ist aufgetreten: ' + error.message;
         this.alertType = 'danger';
       }
