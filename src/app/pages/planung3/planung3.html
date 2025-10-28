@@ -121,7 +121,9 @@
           <td>{{ kind.birthdate | date: 'dd.MM.yyyy' }}</td>
           <td>{{ kind.gender }}</td>
           <td>{{ kind.groupId }}</td>
-          <td>{{ kind.img }}</td>
+          <td>
+            <img *ngIf="kind.img" [src]="kind.img" alt="Kind Bild" class="img-fluid" style="max-height: 100px;"/>
+          </td>
           <td>
             <button type="button" class="btn btn-outline-success" (click)="editKind(kind)">Bearbeiten</button>
             <button type="button" class="btn btn-outline-danger ms-2" (click)="deleteKind(kind.id)">Löschen</button>
