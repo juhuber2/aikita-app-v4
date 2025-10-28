@@ -86,7 +86,7 @@ export class Planung implements OnInit {
         previewGroup.patchValue({ subsection: null });
       });
 
-      //alle Kinder laden + Altersberechnung:
+      //alle Kinder laden:
       this.kinderService.getKinder().subscribe(data => this.kinder.set(data));
   }
 

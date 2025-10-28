@@ -1,21 +1,31 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Master } from '../../services/master';
 import { Child } from '../../models/child';
-import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
+import { ReactiveFormsModule, FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { DatePipe, NgIf } from '@angular/common';
+import { signal } from '@angular/core';
 
 @Component({
   selector: 'app-planung2',
-  imports: [DatePipe],
+  imports: [DatePipe, NgIf],
   templateUrl: './planung2.html',
   styleUrl: './planung2.css'
 })
 export class Planung2 implements OnInit {
   childrenList: Child[] = [];
   childForm!: FormGroup;
+  selectedChild: any = null;
   masterService = inject(Master);
+  
+  kinder = signal<Child[]> ([]);
+  private kinderService = inject(Master);
 
   constructor(private fb: FormBuilder) {}
+
+  // Wenn ein Kind ausgewählt wird
+  onSelectChild(childId: number) {
+    this.selectedChild = this.childrenList.find(c => c.id === childId);
+  }
 
   // Hilfsfunktion: Berechnet das Alter aus dem Geburtsdatum
   calculateAge(birthdate: string): number {
@@ -50,20 +60,14 @@ export class Planung2 implements OnInit {
 			groupId: [0, Validators.required]
 		});
 
-    // Log die URL die verwendet wird
-    console.log('Loading children from URL:', 'https://aikitabewebapi-114119385008.europe-west1.run.app/api/childs');
     
     this.getAllChildren();
+    this.kinderService.getKinder().subscribe(data => this.kinder.set(data));
   }
 
+ 
+
   getAllChildren(){
-   // Prüfe ob Token vorhanden ist
-   const token = sessionStorage.getItem('angularToken');
-   console.log('🔑 Token vorhanden:', !!token);
-   if (token) {
-     console.log('🔑 Token (erste 20 Zeichen):', token.substring(0, 20) + '...');
-   }
-   
    this.masterService.getAllChildrenMaster().subscribe({
   	next: (res: any) => {
 	    console.log('✅ Server antwortet erfolgreich:', res);
@@ -89,7 +93,6 @@ export class Planung2 implements OnInit {
         errorMsg += '1. Backend läuft nicht\n';
         errorMsg += '2. CORS-Header fehlen im Backend\n';
         errorMsg += '3. Falscher Header (X-Session-Token statt Authorization)\n\n';
-        errorMsg += '🔑 Token vorhanden: ' + (!!token ? 'Ja ✅' : 'Nein ❌');
       } else if (error.status === 401) {
         errorMsg += '⚠️ Nicht autorisiert!\n\n';
         errorMsg += 'Bitte zuerst über Login-Seite einloggen.\n';

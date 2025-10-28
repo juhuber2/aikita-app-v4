@@ -3,12 +3,12 @@ import { FormsModule, FormBuilder, FormGroup, Validators, ReactiveFormsModule } 
 import { Child } from '../../models/child';
 import { GroupModel } from '../../models/child-group';
 import { Master } from '../../services/master';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgIf } from '@angular/common';
 import { signal } from '@angular/core'; //Versuch mit Signals
 
 @Component({
   selector: 'app-planung3',
-  imports: [FormsModule, ReactiveFormsModule, DatePipe],
+  imports: [FormsModule, ReactiveFormsModule, DatePipe, NgIf],
   templateUrl: './planung3.html',
   styleUrl: './planung3.css'
 })
@@ -21,13 +21,13 @@ export class Planung3 implements OnInit {
   form!: FormGroup;
   editMode = false;
   selectedId: number | null = null;
+  imageBase64: string | null = null;
   groups: GroupModel[] = [];
 
   ngOnInit(): void {
     this.loadKinder();
 
     this.form = this.fb.group({
-      id: [''],
       name: ['', [Validators.required, Validators.minLength(2)]],
       birthdate: ['' ],
       gender: [''],
@@ -46,10 +46,12 @@ export class Planung3 implements OnInit {
   onSubmit(): void {
     if (this.form.invalid) return;
 
+    //nur für updates, wird beim Erstellen nicht mehr hinzugefügt
     const kind: Child = {
-      id: this.selectedId ?? 0,
-      ...this.form.value
+      ...this.form.value,
+      id: this.editMode ? this.selectedId! : 0
     };
+
 
     if (this.editMode) {
       this.kinderService.updateKind(kind).subscribe(() => {
@@ -76,13 +78,28 @@ export class Planung3 implements OnInit {
   const groupId = Number(groupIdValue); // <--- Hier sicherstellen, dass es eine Zahl ist
 
   this.kinderService.getChildrenByGroupId(groupId).subscribe({
-    next: data => {
-      console.log('Ergebnis:', data);
-      this.kinder.set(data);
-    },
-    error: err => console.error('Fehler:', err)
-  });
-}
+      next: data => {
+        console.log('Ergebnis:', data);
+        this.kinder.set(data);
+      },
+      error: err => console.error('Fehler:', err)
+    });
+  }
+
+    //Base64 upload
+    onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        // Ergebnis (Base64) speichern
+        this.imageBase64 = reader.result as string;
+         // UND ins Formularfeld 'img' schreiben!
+        this.form.get('img')?.setValue(this.imageBase64);
+      };
+      reader.readAsDataURL(file);
+    }
+  }
 
 
   //Bearbeiten starten

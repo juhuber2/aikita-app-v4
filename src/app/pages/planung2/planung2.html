@@ -1,42 +1,105 @@
 <h1 class="text-center">Beobachtung</h1>
 <h4 class="text-center">Hier werden die Kinder angezeigt.</h4>
 
+
+
+
 <div class="container my-5">
-  <div class="row" id="childrenAccordion">
-    @for (item of childrenList; track item.id; let i = $index) {
-      <div class="col-md-6 col-lg-4 mb-4">
-        <div class="card shadow rounded h-100">
-          <div class="card-body position-relative">
-            <img class="small_picture position-absolute top-0 end-0 m-4" 
-                 [src]="getGenderImage(item.gender)" 
-                 alt="child"/>
-            <h5 class="card-title fw-bold fs-2 text">{{ item.name }}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">
-              {{ getGenderDisplay(item.gender) }} • {{ calculateAge(item.birthdate) }} Jahre • {{ item.groupId }}
-            </h6>
-            <!-- Button für Collapse -->
-            <button class="btn btn-sm btn-outline-primary mt-2"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    [attr.data-bs-target]="'#details-' + i"
-                    aria-expanded="false"
-                    [attr.aria-controls]="'details-' + i">
-              Details
-            </button>
+  <div class="row">
+    <div class="col">
 
-            <!-- Collapsible Bereich -->
-            <div class="collapse mt-3"
-                 [attr.id]="'details-' + i"
-                 data-bs-parent="#childrenAccordion">
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item"><strong>ID:</strong> {{ item.id }}</li>
+     
+               <table class="table">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>Name</th>
+                      <!--<th>Alter</th>-->
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @for (kind of childrenList; track kind.id) {
+                      <tr>
+                        <!-- Radio -->
+                        <td>
+                          <input
+                            type="radio"
+                            name="childSelect"
+                            [value]="kind.id"
+                            (change)="onSelectChild(kind.id)" />
+                        </td>
 
-              </ul>
-            </div>
+                        <!-- Name -->
+                        <td> <label for="kindRadio{{kind.id}}">{{ kind.name }}</label> </td>
+                      </tr>
+                    }
+                  </tbody>
+                </table>
+            
+    </div>
 
-          </div>
-        </div>
+    <div class="col">
+  <div *ngIf="selectedChild; else noSelection">
+    <div class="card shadow rounded">
+      <div class="card-body">
+        <h5 class="card-title">{{ selectedChild.name }}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">
+          {{ getGenderDisplay(selectedChild.gender) }} •
+          {{ calculateAge(selectedChild.birthdate) }} Jahre •
+          Gruppe: {{ selectedChild.groupId }}
+        </h6>
       </div>
-    }
+    </div>
+  </div>
+
+  <ng-template #noSelection>
+    <p>Bitte ein Kind auswählen.</p>
+  </ng-template>
+</div>
+
+
+
+    <!--
+    <div class="col">
+      <div class="row" id="childrenAccordion">
+        @for (item of childrenList; track item.id; let i = $index) {
+          <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card shadow rounded h-100">
+              <div class="card-body position-relative">
+                <img class="small_picture position-absolute top-0 end-0 m-4" 
+                    [src]="getGenderImage(item.gender)" 
+                    alt="child"/>
+                <h5 class="card-title fw-bold fs-2 text">{{ item.name }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">
+                  {{ getGenderDisplay(item.gender) }} • {{ calculateAge(item.birthdate) }} Jahre • {{ item.groupId }}
+                </h6>
+
+       
+                <button class="btn btn-sm btn-outline-primary mt-2"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        [attr.data-bs-target]="'#details-' + i"
+                        aria-expanded="false"
+                        [attr.aria-controls]="'details-' + i">
+                  Details
+                </button>
+
+           
+                <div class="collapse mt-3"
+                    [attr.id]="'details-' + i"
+                    data-bs-parent="#childrenAccordion">
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><strong>ID:</strong> {{ item.id }}</li>
+
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  -->
+
   </div>
 </div>
