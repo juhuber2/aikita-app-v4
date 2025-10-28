@@ -66,3 +66,8 @@ For more information on using the Angular CLI, including detailed command refere
 - Observation: Icon added, ChildList added, selecting chaild name and sending id to backend
 - ChildList update, delete works
 - environment.prod.ts: apiUrl changed from __BACKEND_URL__ to backend server adress ('https://aikitabewebapi-1141193....) --> so that project can run here: https://aikita-app-v4.vercel.app/loginMain 
+
+
+### 28.10.2025
+- Add child works
+- Picture upload as base64 prepared
