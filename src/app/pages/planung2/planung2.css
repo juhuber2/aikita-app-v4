@@ -7,19 +7,6 @@ thead th:last-child {
   border-top-right-radius: 0.5rem;
 }
 
-/* Sticky Header */
-thead th {
-  position: sticky;
-  top: 0;
-  background-color: #2C4BB0; /* Lila Header wie im Screenshot */
-  color: white;
-  z-index: 10;
-}
-
-.table th, .table td {
-  vertical-align: middle;
-}
-
 h1 {
     margin-top: 2rem;
     font-family: "KGSecondChancesSketch";
@@ -32,12 +19,26 @@ h4 {
     color: gray;
 }
 
-.table th {
-    font-size: 1rem;
-    color: white;
+
+/* Linke Tabelle scrollt */
+.table-container {
+  max-height: 500px; /* Höhe anpassen */
+  overflow-y: auto;
 }
 
-.small_picture {
-    width: 4rem;
-    height: auto;
+/* Rechte Karte immer sichtbar */
+.details-container {
+  position: display;   /* fixiert im Viewport */
+  top: 300px;         /* Abstand vom oberen Rand */
+  width: 100%;        /* Breite der Karte anpassen */
+}
+
+/* Linke Spalte muss Platz lassen */
+.table-col {
+  margin-right: 20%; /* Muss mindestens so breit sein wie die fixe Karte */
+}
+
+/* Optional: kleine Style-Optimierung */
+.details-container .card {
+  width: 100%;
 }

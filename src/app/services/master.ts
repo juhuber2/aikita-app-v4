@@ -137,21 +137,36 @@ export class Master {
     numberBetreuer: 4
   };
 
-  // Das Subject, das immer den aktuellen Wert kennt und Änderungen weitergibt
-  private settingsSubject = new BehaviorSubject<Settings>(this.settings);
-
-  // Öffentliches Observable, das andere Komponenten abonnieren können
+ private settingsSubject = new BehaviorSubject<Settings>(this.settings);
   settings$ = this.settingsSubject.asObservable();
 
-  // Getter – gibt die aktuellen Werte zurück (z. B. beim Init)
+  // ✅ automatische Aktualisierung
+  reloadChildrenCount() {
+    this.getChildrenCount().subscribe({
+      next: (count) => {
+        // settings aktualisieren
+        this.settings = {
+          ...this.settings,
+          numberChildren: count
+        };
+
+        this.settingsSubject.next(this.settings);
+        console.log('Kinderanzahl aktualisiert:', count);
+      },
+      error: (err) => {
+        console.error('Fehler beim Laden der Kinderzahl', err);
+      }
+    });
+  }
+
   getSettings(): Settings {
     return { ...this.settings };
   }
 
-  // Setter – aktualisiert die Werte und informiert alle Abonnenten
   updateSettings(newSettings: Settings): void {
     this.settings = { ...newSettings };
     this.settingsSubject.next(this.settings);
     console.log('Updated settings:', this.settings);
   }
+
 }

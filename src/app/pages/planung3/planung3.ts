@@ -16,7 +16,6 @@ export class Planung3 implements OnInit {
   private fb = inject(FormBuilder);
   private kinderService = inject(Master);
 
-  //kinder: Child[] = []; //ChildGroup[] = [];
   kinder = signal<Child[]> ([]);
   form!: FormGroup;
   editMode = false;

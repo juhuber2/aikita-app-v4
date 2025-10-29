@@ -6,17 +6,9 @@
 
 <div class="container my-5">
   <div class="row">
-    <div class="col">
-
-     
-               <table class="table">
-                  <thead>
-                    <tr>
-                      <th></th>
-                      <th>Name</th>
-                      <!--<th>Alter</th>-->
-                    </tr>
-                  </thead>
+     <div class="col-4 table-col">
+                <div class="table-container">
+                   <table class="table">
                   <tbody>
                     @for (kind of childrenList; track kind.id) {
                       <tr>
@@ -35,22 +27,24 @@
                     }
                   </tbody>
                 </table>
-            
     </div>
+    
+     </div>
 
-    <div class="col">
-  <div *ngIf="selectedChild; else noSelection">
-    <div class="card shadow rounded">
-      <div class="card-body">
-        <h5 class="card-title">{{ selectedChild.name }}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">
-          {{ getGenderDisplay(selectedChild.gender) }} •
-          {{ calculateAge(selectedChild.birthdate) }} Jahre •
-          Gruppe: {{ selectedChild.groupId }}
-        </h6>
-      </div>
-    </div>
-  </div>
+ <div class="col-4">
+      <div class="details-container">
+        <div *ngIf="selectedChild; else noSelection">
+          <div class="card shadow rounded">
+            <div class="card-body">
+              <h5 class="card-title">{{ selectedChild.name }}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">
+                {{ getGenderDisplay(selectedChild.gender) }} •
+                {{ calculateAge(selectedChild.birthdate) }} Jahre •
+                Gruppe: {{ selectedChild.groupId }}
+              </h6>
+            </div>
+          </div>
+        </div>
 
   <ng-template #noSelection>
     <p>Bitte ein Kind auswählen.</p>
