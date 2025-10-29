@@ -20,23 +20,6 @@
     }
   </div>
 
-  <!-- Anzahl Kinder -->
-  <div class="form-group">
-    <label for="numberChildren">Anzahl Kinder</label>
-    <input
-      id="numberChildren"
-      type="number"
-      formControlName="numberChildren"
-      min="0"
-      placeholder="z. B. 23"
-    />
-    @if (settingsForm.get('numberChildren')?.invalid && settingsForm.get('numberChildren')?.touched) {
-      <div class="error">
-        <small>Bitte eine gültige Zahl ≥ 0 eingeben.</small>
-      </div>
-    }
-  </div>
-
   <!-- Anzahl Betreuer -->
   <div class="form-group">
     <label for="numberBetreuer">Anzahl Betreuer</label>

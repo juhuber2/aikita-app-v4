@@ -11,7 +11,7 @@ import { ActivityModel } from '../models/suggestion';
 import { ObservationModel } from '../models/suggestion';
 import { SuggestionModel } from '../models/suggestion';
 import { Settings } from '../models/settings';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, map } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -79,6 +79,12 @@ export class Master {
     return this.http.get<Child[]>(this.childrenUrl);
   }
 
+  getChildrenCount(): Observable<number> {
+    return this.getAllChildrenMaster().pipe(
+      map(children => children.length)
+    );
+  }
+
   getChildByIdMaster(id: number): Observable<Child> {
     return this.http.get<Child>(`${this.childrenUrl}/${id}`);
   }
@@ -124,10 +130,10 @@ export class Master {
 
 //------------------------------------------------------------------------------------------------------
   // ---- Settings ----
- // 1Die eigentlichen Daten (Startwerte)
+ // Die eigentlichen Daten (Startwerte)
   private settings: Settings = {
     kindergarten: 'Caritas Linz',
-    numberChildren: 23,
+    numberChildren: 0,
     numberBetreuer: 4
   };
 
