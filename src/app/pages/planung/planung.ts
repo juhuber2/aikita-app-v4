@@ -44,8 +44,9 @@ export class Planung implements OnInit {
   ngOnInit(): void {
     // --- Eingabeformular (wird gessendet) ---
     this.form = this.fb.group({
+      //id: [null],
       childId: [null, Validators.required], 
-      age: [null, ],
+      age: [null],
       observation: ['']
     });
 
@@ -122,7 +123,8 @@ export class Planung implements OnInit {
     const formValue = this.form.value;
 
     const fullData: ObservationModel = {
-      id: formValue.childId,  // Geändert von childID zu id
+      //id: formValue.id,
+      childID: formValue.childId,  // Geändert von childID zu id
       age: Number(formValue.age) || 0,
       observation: formValue.observation || 'Keine Beobachtung angegeben'
     };

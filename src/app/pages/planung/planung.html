@@ -71,7 +71,10 @@
           <div class="row justify-content-center">
             <div class="col-md-8 mb-4">
               <label class="form-label fw-bold">Aktivität</label>
-              <textarea formControlName="activity" type="text" class="form-control mx-auto" rows="3"></textarea>
+                <div formGroupName="preview">
+                  <textarea formControlName="activity" type="text" class="form-control mx-auto" rows="3"></textarea>
+                </div>
+
             </div>
           </div>
 
@@ -124,12 +127,17 @@
               </div>
             </div>
 
+            
             <div class="row">
-              <!-- Aktivität -->
+
+              <!--
+              Aktivität
               <div class="col-md-6 mb-3">
                 <label class="form-label fw-bold">Aktivität</label>
                 <input formControlName="activity" type="text" class="form-control" />
               </div>
+
+            -->
 
               <!-- Vertrauen -->
               <div class="col-md-6 mb-3">
