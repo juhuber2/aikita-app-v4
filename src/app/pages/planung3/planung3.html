@@ -16,15 +16,28 @@
           </div>
 
           <!-- Geburtstag -->
-          <div class="col-md-4">
+          <div class="col-md-3">
             <label for="birthdate" class="form-label fw-bold">Geburtstag</label>
-            <input id="birthdate" formControlName="birthdate" class="form-control" />
+            <input 
+              id="birthdate" 
+              formControlName="birthdate" 
+              type="date"
+              class="form-control" 
+              min="2019-01-01"
+              max="2025-12-31"
+              />
           </div>
 
+
             <!-- Gender -->
-          <div class="col-md-2">
+          <div class="col-md-3">
             <label for="gender" class="form-label fw-bold">Geschlecht</label>
-            <input id="gender" formControlName="gender" class="form-control" />
+            <select id="gender" formControlName="gender" class="form-control">
+              <option value="">Bitte wählen</option>
+                <option value="m">männlich</option>
+                <option value="w">weiblich</option>
+                <option value="d">divers</option>
+            </select>
           </div>
 
           <!-- Gruppe -->
@@ -56,7 +69,7 @@
                     [src]="imageBase64"
                     alt="Vorschau"
                     class="img-fluid rounded shadow"
-                    style="max-height: 200px;"
+                    style="max-height: 150px;"
                   />
                 </div>
             </div>

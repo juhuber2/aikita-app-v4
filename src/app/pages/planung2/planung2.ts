@@ -1,13 +1,15 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Master } from '../../services/master';
 import { Child } from '../../models/child';
+import { ObservationbyChildModel } from '../../models/suggestion';
 import { ReactiveFormsModule, FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-import { DatePipe, NgIf } from '@angular/common';
+import { DatePipe, NgForOf, NgIf } from '@angular/common';
 import { signal } from '@angular/core';
+import { DateService } from '../../services/date';
 
 @Component({
   selector: 'app-planung2',
-  imports: [DatePipe, NgIf],
+  imports: [DatePipe, NgIf, NgForOf],
   templateUrl: './planung2.html',
   styleUrl: './planung2.css'
 })
@@ -15,31 +17,26 @@ export class Planung2 implements OnInit {
   childrenList: Child[] = [];
   childForm!: FormGroup;
   selectedChild: any = null;
+  childrenListByObservation: ObservationbyChildModel[] = [];
   masterService = inject(Master);
   
   kinder = signal<Child[]> ([]);
   private kinderService = inject(Master);
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private dateService: DateService) {}
 
   // Wenn ein Kind ausgewählt wird
   onSelectChild(childId: number) {
     this.selectedChild = this.childrenList.find(c => c.id === childId);
+    if (childId) {
+      this.getChildrenByObservation(childId);
+    }
   }
 
-  // Hilfsfunktion: Berechnet das Alter aus dem Geburtsdatum
-  calculateAge(birthdate: string): number {
-    const birth = new Date(birthdate);
-    const today = new Date();
-    let age = today.getFullYear() - birth.getFullYear();
-    const monthDiff = today.getMonth() - birth.getMonth();
-    
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
-      age--;
-    }
-    
-    return age;
+  calculateAge(b: string) {
+    return this.dateService.calculateAge(b);
   }
+
 
   // Hilfsfunktion: Formatiert das Geschlecht für die Anzeige
   getGenderDisplay(gender: string): string {
@@ -108,4 +105,19 @@ export class Planung2 implements OnInit {
 	  }
 	});
   }
+
+  getChildrenByObservation(childId: number) {
+      this.masterService.getChildrenByObservation(1).subscribe({
+        next: (res: ObservationbyChildModel[]) => {
+          console.log("✅ Beobachtungen erhalten:", res);
+          this.childrenListByObservation = res;
+        },
+        error: (err) => {
+          console.error("❌ Fehler beim Laden der Beobachtungen:", err);
+        }
+      });
+  }
+
+
+  
 }

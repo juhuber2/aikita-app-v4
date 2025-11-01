@@ -10,6 +10,14 @@ export interface ObservationModel {
     preview?: string
 }
 
+export interface ObservationbyChildModel {
+  id: number;
+  childId: number;
+  description: string;
+  createdUtc: string;
+}
+
+
 //Interface für fertigen Datensatz: Vorschlag KI + UserÄnderung
 export interface SuggestionModel {
   id: number;

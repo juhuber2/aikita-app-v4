@@ -9,6 +9,7 @@ import { SubSectionModel } from '../models/suggestion';
 import { GoalModel } from '../models/suggestion';
 import { ActivityModel } from '../models/suggestion';
 import { ObservationModel } from '../models/suggestion';
+import { ObservationbyChildModel } from '../models/suggestion';
 import { SuggestionModel } from '../models/suggestion';
 import { Settings } from '../models/settings';
 import { BehaviorSubject, map } from 'rxjs';
@@ -21,11 +22,14 @@ export class Master {
   // Zentrale Backend URL aus Environment
   private baseUrl = `${environment.apiUrl}/api`;
 
-  // Child-Endpoints
+  // Child-Endpoint
   private childrenUrl = `${this.baseUrl}/childs`;
 
-  // ChildGroup-Endpoints
+  // ChildGroup-Endpoint
   private childrenGroupUrl = `${this.baseUrl}/childs/bygroup`;
+
+  // ChildObservations-Endpoint
+  private childrenObservationUrl = `${this.baseUrl}/logdatas/bychild`;
 
   constructor(private http: HttpClient) {
     // Debug: Zeige die konfigurierten URLs
@@ -106,6 +110,11 @@ export class Master {
     return this.http.get<Child[]>(`${this.childrenGroupUrl}/${groupId}`);
   }
 
+  // Kinder nach Observation filtern
+  getChildrenByObservation(byChildId: number): Observable<ObservationbyChildModel[]> {
+    return this.http.get<ObservationbyChildModel[]>(`${this.childrenObservationUrl}/${byChildId}`);
+  }
+
   //Kinderliste
   getKinder(): Observable<Child[]> {
     return this.http.get<Child[]>(this.childrenUrl);
@@ -168,5 +177,9 @@ export class Master {
     this.settingsSubject.next(this.settings);
     console.log('Updated settings:', this.settings);
   }
+
+  //------------------------------------------------------------------------------------------------------
+  // ---- Age ----
+  
 
 }

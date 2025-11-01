@@ -28,7 +28,7 @@ export class Planung3 implements OnInit {
 
     this.form = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(2)]],
-      birthdate: ['' ],
+      birthdate: [''],
       gender: [''],
       img: [''],
       groupId: [''],
@@ -63,6 +63,7 @@ export class Planung3 implements OnInit {
         this.form.reset();
       });
     }
+    this.imageBase64 = null;
   }
 
   //Nach Gruppe filtern

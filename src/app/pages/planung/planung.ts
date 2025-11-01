@@ -13,6 +13,7 @@ import {
   ObservationModel,
   SuggestionModel
 } from '../../models/suggestion'
+import { DateService } from '../../services/date';
 
 @Component({
   selector: 'app-planung',
@@ -39,7 +40,7 @@ export class Planung implements OnInit {
   subsections: any[] = [];
 
   masterService = inject(Master);
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private dateService: DateService) {}
 
   ngOnInit(): void {
     // --- Eingabeformular (wird gessendet) ---
@@ -47,7 +48,7 @@ export class Planung implements OnInit {
       id: [1],
       childId: [null, Validators.required], 
       age: [null],
-      observation: ['']
+      observation: ['', [Validators.required, Validators.minLength(8)]]
     });
 
     // --- Antwortformular (wird empfangen) ---
@@ -91,7 +92,9 @@ export class Planung implements OnInit {
       this.kinderService.getKinder().subscribe(data => this.kinder.set(data));
   }
 
-
+  calcChildAge(b: string) {
+    return this.dateService.calculateAge(b);
+  }
     
 
      // Lade alle Listen vom Backend
@@ -118,14 +121,21 @@ export class Planung implements OnInit {
 
   // --- Anfrage an Server schicken ---
   createAnswer() {
-    this.showSolution = true;
-
     const formValue = this.form.value;
+
+    const selectedChild = this.kinder().find(k => k.id === formValue.childId);
+
+    if (!selectedChild) {
+      alert('Bitte zuerst ein Kind auswählen!');
+      return;
+    }
+
+    this.showSolution = true;
 
     const fullData: ObservationModel = {
       id: formValue.id,
       childID: formValue.childId,
-      age: Number(formValue.age) || 0,
+      age: this.calcChildAge(selectedChild.birthdate),   
       observation: formValue.observation || 'Keine Beobachtung angegeben'
     };
 
