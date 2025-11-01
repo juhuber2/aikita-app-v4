@@ -12,8 +12,8 @@ export interface ObservationModel {
 
 export interface ObservationbyChildModel {
   id: number;
+  fullDataId: number;
   childId: number;
-  description: string;
   createdUtc: string;
 }
 
@@ -30,6 +30,7 @@ export interface SuggestionModel {
   activity: string;
   resultId: number;
   resultToken: string;
+  createdUtc: string;
   childId: number
 }
 

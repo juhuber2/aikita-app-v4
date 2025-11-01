@@ -30,15 +30,15 @@ h4 {
 .details-container {
   position: display;   /* fixiert im Viewport */
   top: 300px;         /* Abstand vom oberen Rand */
-  width: 100%;        /* Breite der Karte anpassen */
+  width: 60rem;        /* Breite der Karte anpassen */
 }
 
 /* Linke Spalte muss Platz lassen */
 .table-col {
-  margin-right: 20%; /* Muss mindestens so breit sein wie die fixe Karte */
+  margin-right: 10%; /* Muss mindestens so breit sein wie die fixe Karte */
 }
 
 /* Optional: kleine Style-Optimierung */
 .details-container .card {
-  width: 100%;
+  height: 8rem;
 }

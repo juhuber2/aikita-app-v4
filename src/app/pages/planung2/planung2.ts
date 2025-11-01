@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Master } from '../../services/master';
 import { Child } from '../../models/child';
-import { ObservationbyChildModel } from '../../models/suggestion';
+import { ObservationbyChildModel, SuggestionModel } from '../../models/suggestion';
 import { ReactiveFormsModule, FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe, NgForOf, NgIf } from '@angular/common';
 import { signal } from '@angular/core';
@@ -18,6 +18,7 @@ export class Planung2 implements OnInit {
   childForm!: FormGroup;
   selectedChild: any = null;
   childrenListByObservation: ObservationbyChildModel[] = [];
+  fullDatas: SuggestionModel[] = [];
   masterService = inject(Master);
   
   kinder = signal<Child[]> ([]);
@@ -27,11 +28,56 @@ export class Planung2 implements OnInit {
 
   // Wenn ein Kind ausgewählt wird
   onSelectChild(childId: number) {
-    this.selectedChild = this.childrenList.find(c => c.id === childId);
-    if (childId) {
-      this.getChildrenByObservation(childId);
+  this.selectedChild = this.childrenList.find(c => c.id === childId);
+
+  if (!childId) return;
+
+  // fullDatas leeren, damit keine alten Daten angezeigt werden
+  this.fullDatas = [];
+  console.log("fullDatas geleert");
+
+  // Beobachtungen zum Kind holen
+  this.masterService.getChildrenByObservation(childId).subscribe({
+    next: (obsData) => {
+      this.childrenListByObservation = obsData;
+
+      // Möglich: viele FullDataIds
+      this.fullDatas = [];
+
+       for (let obs of obsData) {
+
+        console.log("PROCESS obs:", obs);
+
+        if (!obs.fullDataId || obs.fullDataId === 0) {
+          console.warn("fullDataId ungültig →", obs.fullDataId, "→ wird übersprungen!");
+          continue;
+        }
+
+        console.log("Hole FullDatas für ID:", obs.fullDataId);
+
+        this.masterService.getFullDatas(obs.fullDataId).subscribe({
+          next: (full) => {
+            console.log("FullData empfangen für", obs.fullDataId, "→", full);
+            const fullArray = Array.isArray(full) ? full : [full];
+
+            // Für jedes FullData den createdUtc aus Observation mitkopieren
+            fullArray.forEach(f => f['createdUtc'] = obs.createdUtc);
+
+            this.fullDatas.push(...fullArray);
+            console.log("fullDatas aktuell:", this.fullDatas);
+          },
+          error: err => {
+            console.error("Fehler beim Laden von FullData → id:", obs.fullDataId, err);
+          }
+        });
+      }
+    },
+    error: err => {
+      console.error("Fehler beim Laden der Beobachtungen → childId:", childId, err);
     }
-  }
+  });
+}
+
 
   calculateAge(b: string) {
     return this.dateService.calculateAge(b);
@@ -41,11 +87,6 @@ export class Planung2 implements OnInit {
   // Hilfsfunktion: Formatiert das Geschlecht für die Anzeige
   getGenderDisplay(gender: string): string {
     return gender === 'Male' ? 'Junge' : gender === 'Female' ? 'Mädchen' : gender;
-  }
-
-  // Hilfsfunktion: Gibt den richtigen Bild-Pfad zurück
-  getGenderImage(gender: string): string {
-    return gender === 'Female' ? '/girl.png' : '/boy.png';
   }
 
   ngOnInit(): void {

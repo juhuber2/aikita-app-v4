@@ -31,6 +31,9 @@ export class Master {
   // ChildObservations-Endpoint
   private childrenObservationUrl = `${this.baseUrl}/logdatas/bychild`;
 
+   // FullDatas-Endpoint
+  private FullDatasUrl = `${this.baseUrl}/fullDatas`;
+
   constructor(private http: HttpClient) {
     // Debug: Zeige die konfigurierten URLs
     console.log('🔧 Master Service initialized');
@@ -115,6 +118,12 @@ export class Master {
     return this.http.get<ObservationbyChildModel[]>(`${this.childrenObservationUrl}/${byChildId}`);
   }
 
+  // FullDatas von Kindern ausgeben
+  getFullDatas(id: number): Observable<SuggestionModel[]> {
+    return this.http.get<SuggestionModel[]>(`${this.FullDatasUrl}/${id}`);
+  }
+
+
   //Kinderliste
   getKinder(): Observable<Child[]> {
     return this.http.get<Child[]>(this.childrenUrl);
@@ -178,8 +187,5 @@ export class Master {
     console.log('Updated settings:', this.settings);
   }
 
-  //------------------------------------------------------------------------------------------------------
-  // ---- Age ----
-  
 
 }
