@@ -71,3 +71,9 @@ For more information on using the Angular CLI, including detailed command refere
 ### 28.10.2025
 - Add child works
 - Picture upload as base64 prepared
+
+### 01.11.2025
+- removed Validation on Observation Form
+- created age calculation Service
+- removed the field age -- -age is calculated from the child object and sent to the backend
+- added selector for birthdate and gender
