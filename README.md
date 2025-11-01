@@ -73,6 +73,7 @@ For more information on using the Angular CLI, including detailed command refere
 - Picture upload as base64 prepared
 
 ### 01.11.2025
-- removing Validation on Observation Form
+- removed Validation on Observation Form
 - created age calculation Service
 - removed the field age -- -age is calculated from the child object and sent to the backend
+- added selector for birthdate and gender
