@@ -45,8 +45,8 @@ export class Planung implements OnInit {
   ngOnInit(): void {
     // --- Eingabeformular (wird gessendet) ---
     this.form = this.fb.group({
-      id: [1],
-      childId: [null], 
+      id: [null],
+      childId: [null],
       age: [null],
       observation: ['', [Validators.required, Validators.minLength(8)]]
     });
@@ -97,7 +97,7 @@ export class Planung implements OnInit {
   }
     
 
-     // Lade alle Listen vom Backend
+  // Lade alle Listen vom Backend
   loadData() {
     this.masterService.getAllAreas().subscribe({
       next: (data) => {
@@ -133,7 +133,7 @@ export class Planung implements OnInit {
     this.showSolution = true;
 
     const fullData: ObservationModel = {
-      id: formValue.id,
+      id: formValue.childId,
       childID: formValue.childId,
       age: this.calcChildAge(selectedChild.birthdate),   
       observation: formValue.observation || 'Keine Beobachtung angegeben'
