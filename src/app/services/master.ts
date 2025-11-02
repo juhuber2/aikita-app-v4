@@ -75,7 +75,7 @@ export class Master {
 
   //an Backend senden - KI + UserÄnderung
   addSuggestion(data: any): Observable<any> {
-  return this.http.post<SuggestionModel>(`${this.baseUrl}/ai/save`, data);
+  return this.http.post<SuggestionModel>(`${this.baseUrl}/AiResultDatas/save`, data);
   }
 
 

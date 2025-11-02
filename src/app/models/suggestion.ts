@@ -31,7 +31,7 @@ export interface SuggestionModel {
   resultId: number;
   resultToken: string;
   createdUtc: string;
-  childId: number
+  childId?: number
 }
 
 export interface AreaModel {

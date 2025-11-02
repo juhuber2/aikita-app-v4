@@ -46,7 +46,7 @@ export class Planung implements OnInit {
     // --- Eingabeformular (wird gessendet) ---
     this.form = this.fb.group({
       id: [1],
-      childId: [null, Validators.required], 
+      childId: [null], 
       age: [null],
       observation: ['', [Validators.required, Validators.minLength(8)]]
     });
@@ -206,7 +206,7 @@ export class Planung implements OnInit {
       observation: this.form.value.observation,
       resultId: temp.resultId,
       resultToken: temp.resultToken,
-      childId: preview.childId
+      childId: preview.childId   //ev ist hier im Backend ein Fehler: childId: this.form.value.childId  statt preview.childId
   };
 
     this.masterService.addSuggestion(suggestion).subscribe({
