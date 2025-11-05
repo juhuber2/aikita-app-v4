@@ -77,3 +77,6 @@ For more information on using the Angular CLI, including detailed command refere
 - created age calculation Service
 - removed the field age -- -age is calculated from the child object and sent to the backend
 - added selector for birthdate and gender
+
+  ### 02.11.2025
+- updated Dockerfile
