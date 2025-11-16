@@ -1,0 +1,179 @@
+<div class="week-planner-container">
+  <!-- Header mit Datumsnavigation und Gruppentitel -->
+  <div class="week-header-row">
+    <div class="week-navigation">
+      <button class="nav-button" (click)="previousWeek()" [disabled]="isLoading">
+        <span>◄</span>
+      </button>
+      
+      <div class="week-title">
+        <h2>{{ weekTitle }}</h2>
+      </div>
+      
+      <button class="nav-button" (click)="nextWeek()" [disabled]="isLoading">
+        <span>►</span>
+      </button>
+    </div>
+
+    <div class="group-title" *ngIf="selectedGroup">
+      <h2>Wochenplan {{ selectedGroup.name }}</h2>
+    </div>
+  </div>
+
+  <!-- Error Message -->
+  <div class="error-message" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Loading Spinner -->
+  <div class="loading" *ngIf="isLoading">
+    <div class="spinner"></div>
+    <p>Lade Wochenplan...</p>
+  </div>
+
+  <!-- Haupt-Container -->
+  <div class="main-container" *ngIf="!isLoading">
+    
+    <!-- Wochenplan Grid -->
+    <div class="week-grid-container">
+      <div class="week-grid">
+        <!-- Header Row mit Wochentagen -->
+        <div class="time-column header-cell">Zeit</div>
+        <div class="day-header" *ngFor="let day of weekDays; let i = index">
+          <div class="day-name">{{ day.dayOfWeek }}</div>
+          <div class="day-date">{{ formatDateDisplay(day.date) }}</div>
+        </div>
+
+        <!-- Zeitraster -->
+        <ng-container *ngFor="let hour of hours">
+          <!-- Zeit-Label -->
+          <div class="time-cell">{{ hour }}</div>
+          
+          <!-- Tages-Zellen -->
+          <div 
+            class="day-cell" 
+            *ngFor="let day of weekDays; let dayIndex = index"
+            (dragover)="onDragOver($event)"
+            (drop)="onDrop($event, dayIndex, hour)"
+            (click)="openActivityModal(dayIndex, hour)">
+            
+            <!-- Aktivitäten für diese Stunde -->
+            <div 
+              class="activity-item" 
+              *ngFor="let activity of getActivitiesForHour(dayIndex, hour); let actIndex = index"
+              draggable="true"
+              (dragstart)="onDragStart(activity)">
+              <div class="activity-header">
+                <strong>{{ activity.title }}</strong>
+                <div class="activity-time">{{ formatTime(activity.startTime) }} - {{ formatTime(activity.endTime) }}</div>
+                <div class="activity-actions">
+                  <button 
+                    class="edit-btn" 
+                    (click)="editActivity(dayIndex, weekDays[dayIndex].activities.indexOf(activity)); $event.stopPropagation()"
+                    title="Bearbeiten">✏️</button>
+                  <button 
+                    class="remove-btn" 
+                    (click)="removeActivity(dayIndex, weekDays[dayIndex].activities.indexOf(activity)); $event.stopPropagation()"
+                    title="Entfernen">X</button>
+                </div>
+              </div>
+              <div class="activity-desc" *ngIf="activity.description">
+                {{ activity.description }}
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+    <!-- Sidebar mit LogDatas -->
+    <div class="sidebar">
+      <h3>Vergangene Aktivitäten</h3>
+      <p class="sidebar-subtitle">Letzte 2 Wochen</p>
+      
+      <div class="logdata-list">
+        <div class="logdata-group" *ngFor="let logData of recentLogDatas">
+          <div class="logdata-goal">🎯 {{ logData.goal }}</div>
+          <div class="logdata-activities">
+            <div 
+              class="activity-tag draggable" 
+              *ngFor="let activity of logData.activities"
+              draggable="true"
+              (dragstart)="onDragStartActivity(logData, activity)"
+              title="Zum Wochenplan ziehen">
+              ✨ {{ activity }}
+            </div>
+          </div>
+          <div class="logdata-date">📅 {{ logData.createdUtc | date: 'dd.MM.yyyy' }}</div>
+        </div>
+        
+        <div class="no-data" *ngIf="recentLogDatas.length === 0">
+          Keine Aktivitäten gefunden
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Speichern Button -->
+  <div class="action-buttons" *ngIf="!isLoading">
+    <button 
+      class="save-button" 
+      (click)="saveWeekPlanner()"
+      [disabled]="isSaving">
+      <span *ngIf="!isSaving">💾 Wochenplan speichern</span>
+      <span *ngIf="isSaving">Wird gespeichert...</span>
+    </button>
+
+    <a routerLink="/wpsettings" class="settings-button" title="Einstellungen">
+      ⚙️ Einstellungen
+    </a>
+  </div>
+
+  <!-- Activity Modal -->
+  <div class="modal-overlay" *ngIf="showActivityModal" (click)="closeActivityModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3>{{ isEditMode ? 'Aktivität bearbeiten' : 'Aktivität hinzufügen' }}</h3>
+        <button class="close-btn" (click)="closeActivityModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Titel</label>
+          <input 
+            type="text" 
+            [(ngModel)]="newActivityForm.title" 
+            placeholder="z.B. Morgenkreis"
+            class="form-input">
+        </div>
+        <div class="time-row">
+          <div class="form-group">
+            <label>Von</label>
+            <input 
+              type="time" 
+              [(ngModel)]="newActivityForm.startTime" 
+              class="form-input">
+          </div>
+          <div class="form-group">
+            <label>Bis</label>
+            <input 
+              type="time" 
+              [(ngModel)]="newActivityForm.endTime" 
+              class="form-input">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Beschreibung (optional)</label>
+          <textarea 
+            [(ngModel)]="newActivityForm.description" 
+            placeholder="Details zur Aktivität"
+            class="form-textarea"
+            rows="3"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="cancel-btn" (click)="closeActivityModal()">Abbrechen</button>
+        <button class="save-btn" (click)="addActivityFromModal()">Hinzufügen</button>
+      </div>
+    </div>
+  </div>
+</div>
