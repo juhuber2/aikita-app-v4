@@ -1,0 +1,233 @@
+<div class="wpsettings-container">
+  <!-- Header -->
+  <div class="settings-header">
+    <button class="back-button" routerLink="/weekplanner" title="Zurück zum Wochenplaner">
+      ← Zurück
+    </button>
+    <h1>⚙️ Wochenplaner Einstellungen</h1>
+    <p class="subtitle">Konfigurieren Sie Ihren Wochenplaner für die ausgewählte Gruppe</p>
+  </div>
+
+  <!-- Loading -->
+  <div class="loading" *ngIf="isLoading">
+    <div class="spinner"></div>
+    <p>Lade Einstellungen...</p>
+  </div>
+
+  <!-- Main Content -->
+  <div class="settings-content" *ngIf="!isLoading">
+    
+    <!-- Gruppen-Auswahl -->
+    <div class="settings-section">
+      <h2>📋 Gruppe auswählen</h2>
+      <div class="form-group">
+        <label for="groupSelect">Gruppe:</label>
+        <select 
+          id="groupSelect" 
+          [(ngModel)]="selectedGroupId" 
+          (change)="onGroupChange()"
+          class="form-select">
+          <option [value]="0" disabled>Bitte Gruppe wählen</option>
+          <option *ngFor="let group of groups" [value]="group.id">
+            {{ group.name }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Zeiteinstellungen -->
+    <div class="settings-section">
+      <h2>🕐 Zeiteinstellungen</h2>
+      <div class="time-settings">
+        <div class="form-group">
+          <label for="startHour">Startzeit:</label>
+          <select id="startHour" [(ngModel)]="settings.startHour" class="form-select">
+            <option *ngFor="let hour of getHourOptions()" [value]="hour">
+              {{ hour.toString().padStart(2, '0') }}:00 Uhr
+            </option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="endHour">Endzeit:</label>
+          <select id="endHour" [(ngModel)]="settings.endHour" class="form-select">
+            <option *ngFor="let hour of getHourOptions()" [value]="hour">
+              {{ hour.toString().padStart(2, '0') }}:00 Uhr
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Wochentage -->
+    <div class="settings-section">
+      <h2>📅 Aktive Wochentage</h2>
+      <div class="days-grid">
+        <div class="day-checkbox">
+          <input type="checkbox" id="monday" [(ngModel)]="settings.enabledDays.monday">
+          <label for="monday">Montag</label>
+        </div>
+        <div class="day-checkbox">
+          <input type="checkbox" id="tuesday" [(ngModel)]="settings.enabledDays.tuesday">
+          <label for="tuesday">Dienstag</label>
+        </div>
+        <div class="day-checkbox">
+          <input type="checkbox" id="wednesday" [(ngModel)]="settings.enabledDays.wednesday">
+          <label for="wednesday">Mittwoch</label>
+        </div>
+        <div class="day-checkbox">
+          <input type="checkbox" id="thursday" [(ngModel)]="settings.enabledDays.thursday">
+          <label for="thursday">Donnerstag</label>
+        </div>
+        <div class="day-checkbox">
+          <input type="checkbox" id="friday" [(ngModel)]="settings.enabledDays.friday">
+          <label for="friday">Freitag</label>
+        </div>
+        <div class="day-checkbox">
+          <input type="checkbox" id="saturday" [(ngModel)]="settings.enabledDays.saturday">
+          <label for="saturday">Samstag</label>
+        </div>
+        <div class="day-checkbox">
+          <input type="checkbox" id="sunday" [(ngModel)]="settings.enabledDays.sunday">
+          <label for="sunday">Sonntag</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Wiederkehrende Aktivitäten -->
+    <div class="settings-section recurring-section">
+      <h2>🔄 Wiederkehrende Aktivitäten</h2>
+      <p class="section-info">Diese Aktivitäten werden automatisch beim Erstellen eines neuen Wochenplans eingefügt</p>
+
+      <!-- Zwei-Spalten-Layout -->
+      <div class="recurring-layout">
+        
+        <!-- Linke Seite: Bestehende Aktivitäten -->
+        <div class="existing-activities">
+          <h3>Definierte Aktivitäten</h3>
+          
+          <div class="activity-list" *ngIf="settings.recurringActivities && settings.recurringActivities.length > 0">
+            <div 
+              class="activity-card" 
+              *ngFor="let activity of settings.recurringActivities; let i = index"
+              [style.border-left-color]="activity.color || '#2C4BB0'">
+              <div class="activity-header">
+                <strong>{{ activity.title }}</strong>
+                <div class="activity-actions">
+                  <button class="edit-btn" (click)="editActivity(i)" title="Bearbeiten">✏️</button>
+                  <button class="remove-btn" (click)="removeActivity(i)" title="Entfernen">×</button>
+                </div>
+              </div>
+              <div class="activity-time">
+                {{ activity.startTime }} - {{ activity.endTime }}
+              </div>
+              <div class="activity-days">
+                📅 {{ getDayLabel(activity.days) }}
+              </div>
+              <div class="activity-desc" *ngIf="activity.description">
+                {{ activity.description }}
+              </div>
+            </div>
+          </div>
+
+          <div class="no-activities" *ngIf="!settings.recurringActivities || settings.recurringActivities.length === 0">
+            Noch keine wiederkehrenden Aktivitäten definiert
+          </div>
+
+          <!-- Eigene Aktivität hinzufügen -->
+          <div class="add-custom">
+            <h4>{{ isEditMode ? '✏️ Aktivität bearbeiten' : '➕ Eigene Aktivität hinzufügen' }}</h4>
+            <div class="form-group">
+              <input 
+                type="text" 
+                [(ngModel)]="newActivity.title" 
+                placeholder="Titel der Aktivität"
+                class="form-input">
+            </div>
+            <div class="time-row">
+              <div class="form-group">
+                <input 
+                  type="time" 
+                  [(ngModel)]="newActivity.startTime" 
+                  class="form-input">
+              </div>
+              <span>bis</span>
+              <div class="form-group">
+                <input 
+                  type="time" 
+                  [(ngModel)]="newActivity.endTime" 
+                  class="form-input">
+              </div>
+            </div>
+            <div class="form-group">
+              <textarea 
+                [(ngModel)]="newActivity.description" 
+                placeholder="Beschreibung (optional)"
+                class="form-textarea"
+                rows="2"></textarea>
+            </div>
+            <div class="day-selector">
+              <button 
+                *ngFor="let day of dayNames"
+                class="day-btn"
+                [class.selected]="isDaySelected(day.key)"
+                (click)="toggleDay(day.key)">
+                {{ day.label }}
+              </button>
+            </div>
+            <div class="button-row">
+              <button class="add-btn" (click)="isEditMode ? updateActivity() : addCustomActivity()">
+                {{ isEditMode ? 'Aktualisieren' : 'Hinzufügen' }}
+              </button>
+              <button class="cancel-btn" *ngIf="isEditMode" (click)="cancelEdit()">
+                Abbrechen
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rechte Seite: Vorschläge -->
+        <div class="suggestions-sidebar">
+          <h3>💡 Vorschläge</h3>
+          <p class="sidebar-info">Klicken Sie auf einen Vorschlag, um ihn hinzuzufügen</p>
+          
+          <div class="suggestion-list">
+            <div 
+              class="suggestion-card" 
+              *ngFor="let suggestion of activitySuggestions"
+              (click)="addActivityFromSuggestion(suggestion)"
+              [style.border-left-color]="suggestion.color">
+              <div class="suggestion-title">{{ suggestion.title }}</div>
+              <div class="suggestion-time">{{ suggestion.startTime }} - {{ suggestion.endTime }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Speichern Button -->
+    <div class="action-buttons">
+      <button 
+        class="save-button" 
+        (click)="saveSettings()"
+        [disabled]="isSaving || selectedGroupId === 0">
+        <span *ngIf="!isSaving">💾 Einstellungen speichern</span>
+        <span *ngIf="isSaving">Wird gespeichert...</span>
+      </button>
+      
+      <!-- Success Message -->
+      <div class="alert alert-success" *ngIf="successMessage">
+        ✅ {{ successMessage }}
+      </div>
+      
+      <!-- Error Message -->
+      <div class="error-message" *ngIf="errorMessage">
+        ⚠️ {{ errorMessage }}
+      </div>
+      
+      <!-- Zurück Button -->
+      <button class="back-button-bottom" routerLink="/weekplanner" title="Zurück zum Wochenplaner">
+        ← Zurück zum Wochenplaner
+      </button>
+    </div>
+  </div>
+</div>

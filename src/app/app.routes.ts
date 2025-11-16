@@ -7,6 +7,8 @@ import { Planung3 } from './pages/planung3/planung3';
 import { Planung4 } from './pages/planung4/planung4';
 import { authGuard } from './login/guards/auth-guard';
 import { Sidebar } from './sidebar/sidebar';
+import { WeekPlanner } from './pages/weekplanner/week-planner/week-planner';
+import { WPSettings } from './pages/weekplanner/wpsettings/wpsettings';
 
 export const routes: Routes = [
 
@@ -19,7 +21,9 @@ export const routes: Routes = [
                 { path: 'planung', component: Planung, title: 'Planung' },
                 { path: 'planung2', component: Planung2, title: 'Planung2' },
                 { path: 'planung3', component: Planung3, title: 'Planung3' },
-                { path: 'planung4', component: Planung4, title: 'Planung4' }
+                { path: 'planung4', component: Planung4, title: 'Planung4' },
+                { path: 'weekplanner', component: WeekPlanner, title: 'Week Planner' },
+                { path: 'wpsettings', component: WPSettings, title: 'Wochenplaner Einstellungen' }
             ]   
     },
 ];
