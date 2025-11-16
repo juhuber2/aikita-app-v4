@@ -36,7 +36,7 @@
     
     <!-- Wochenplan Grid -->
     <div class="week-grid-container">
-      <div class="week-grid">
+      <div class="week-grid" [ngStyle]="{'grid-template-columns': '80px repeat(' + weekDays.length + ', 1fr)'}">
         <!-- Header Row mit Wochentagen -->
         <div class="time-column header-cell">Zeit</div>
         <div class="day-header" *ngFor="let day of weekDays; let i = index">
